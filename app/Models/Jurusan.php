@@ -14,6 +14,11 @@ class Jurusan extends Model
     
     public function kelas()
     {
-        return $this->belongsTo(Jurusan::class, 'jurusanID');
+        return $this->belongsTo(Kelas::class, 'jurusanID');
+    }
+
+    public function pembimbing()
+    {
+        return $this->hasMany(Pembimbing::class, 'jurusanID');
     }
 }

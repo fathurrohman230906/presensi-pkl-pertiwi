@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jurusan', function (Blueprint $table) {
-            $table->id('jurusanID');
-            $table->string('nm_jurusan');
+        Schema::create('jadwal', function (Blueprint $table) {
+            $table->id('jadwalID');
+            $table->foreignId('perusahaanID')->constrained('perusahaan', 'perusahaanID')->onDelete('cascade');
+            $table->time('jam_masuk');
+            $table->time('jam_keluar');
+            $table->date('hari');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jurusan');
+        Schema::dropIfExists('jadwal');
     }
 };

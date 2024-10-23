@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin', function (Blueprint $table) {
-            $table->id('adminID');
+        Schema::create('wali_kelas', function (Blueprint $table) {
+            $table->id('wali_kelasID');
             $table->string('email');
             $table->string('password');
             $table->string('nm_lengkap');
-            $table->string('jk');
+            $table->enum('jk', ['L', 'P']);
             $table->string('agama');
+            $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade');
+            $table->integer('no_tlp');
             $table->string('foto');
             $table->text('alamat');
+
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('wali_kelas');
     }
 };

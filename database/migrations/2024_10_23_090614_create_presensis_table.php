@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
-            $table->id('nis');
-            $table->string('email');
-            $table->string('password');
-            $table->string('nm_lengkap');
-            $table->enum('jk', ['L', 'P']);
-            $table->string('agama');
-            $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade');
+        Schema::create('presensi', function (Blueprint $table) {
+            $table->id('presensiID');
+            $table->foreignId('nis')->constrained('siswa', 'nis')->onDelete('cascade');
             $table->foreignId('perusahaanID')->constrained('perusahaan', 'perusahaanID')->onDelete('cascade');
-            $table->integer('no_tlp');
+            $table->date('tgl_presensi');
+            $table->time('masuk');
+            $table->time('pulang');
+            $table->enum('status_presensi', ['hadir', 'sakit', 'izin']);
+            $table->string('keterangan');
             $table->string('foto');
-            $table->text('alamat');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('presensi');
     }
 };

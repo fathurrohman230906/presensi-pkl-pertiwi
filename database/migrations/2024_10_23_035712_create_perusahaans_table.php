@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('perusahaanID');
             $table->string('pendiri');
             $table->string('nm_perusahaan');
+            $table->string('email');
+            $table->string('no_tlp');
             $table->string('deskripsi');
             $table->text('alamat');
             $table->timestamps();

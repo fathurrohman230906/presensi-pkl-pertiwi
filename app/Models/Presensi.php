@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Siswa extends Model
+class Presensi extends Model
 {
     use HasFactory;
+
     protected $fillable = 
     [
-      "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "perusahaanID", "no_tlp", "foto", "alamat"
+      "nis", "perusahaanID", "tgl_presensi", "masuk", "pulang", "status_presensi", "keterangan", "foto", "latitude", "longitude"
     ];
-    protected $primaryKey = "nis";
-    
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class, 'kelasID');
-    }
-    
+    protected $primaryKey = "presensiID";
+
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaanID');
+    }
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'nis');
     }
 }

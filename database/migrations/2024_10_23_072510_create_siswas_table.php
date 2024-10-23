@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('nm_lengkap');
             $table->string('jk');
             $table->string('agama');
-            $table->foreignId('kelasID')->constrained()->onDelete('cascade');
-            $table->foreignId('perusahaanID')->constrained()->onDelete('cascade');
+            $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade');
+            $table->foreignId('perusahaanID')->constrained('perusahaan', 'perusahaanID')->onDelete('cascade');
             $table->integer('no_tlp');
             $table->string('foto');
             $table->text('alamat');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswas');
+        Schema::dropIfExists('siswa');
     }
 };

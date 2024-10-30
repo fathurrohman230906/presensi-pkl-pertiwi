@@ -40,6 +40,22 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+        'pembimbing' => [
+            'driver' => 'session',
+            'provider' => 'pembimbing',
+        ],
+        'wali_kelas' => [
+            'driver' => 'session',
+            'provider' => 'wali_kelas',
+        ],
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'siswa',
+        ],
     ],
 
     /*
@@ -64,6 +80,27 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // Ensure this model exists
+        ],
+
+        'pembimbing' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pembimbing::class, // Ensure this model exists
+        ],
+
+        'wali_kelas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\WaliKelas::class, // Ensure this model exists
+        ],
+
+        'siswa' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Siswa::class, // Ensure this model exists
+        ],
+    
 
         // 'users' => [
         //     'driver' => 'database',

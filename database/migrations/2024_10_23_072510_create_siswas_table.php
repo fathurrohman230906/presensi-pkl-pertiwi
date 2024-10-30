@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->id('nis');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('nm_lengkap');
             $table->enum('jk', ['L', 'P']);
             $table->string('agama');
-            $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade');
-            $table->foreignId('perusahaanID')->constrained('perusahaan', 'perusahaanID')->onDelete('cascade');
-            $table->integer('no_tlp');
-            $table->string('foto');
+            $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade')->nullable();
+            $table->integer('no_tlp')->nullable();
+            $table->string('foto')->nullable();
             $table->text('alamat');
             $table->timestamps();
         });

@@ -2,10 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -17,14 +15,26 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
+        // Jika tidak ada guard yang ditentukan, gunakan default guards
+        $guards = empty($guards) ? ['admin', 'pembimbing', 'wali_kelas', 'siswa'] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            // Memeriksa apakah pengguna terautentikasi untuk setiap guard
+            if (auth($guard)->check()) {
+                // Redirect ke dashboard yang sesuai berdasarkan guard
+                switch ($guard) {
+                    case 'admin':
+                        return redirect('/admin-dashboard'); // Redirect ke dashboard admin
+                    case 'pembimbing':
+                        return redirect('/pembimbing-dashboard'); // Redirect ke dashboard pembimbing
+                    case 'wali_kelas':
+                        return redirect('/wali-kelas-dashboard'); // Redirect ke dashboard wali kelas
+                    case 'siswa':
+                        return redirect('/siswa-dashboard'); // Redirect ke dashboard siswa
+                }
             }
         }
 
-        return $next($request);
+        return $next($request); // Lanjutkan permintaan jika tidak ada yang terautentikasi
     }
 }

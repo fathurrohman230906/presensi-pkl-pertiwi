@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class WaliKelas extends Model
+class WaliKelas extends Authenticatable
 {
     use HasFactory;
 
@@ -15,7 +16,7 @@ class WaliKelas extends Model
     ];
 
     protected $primaryKey = "wali_kelasID";
-
+    protected $table = 'wal_kelas';
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelasID');

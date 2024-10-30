@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Siswa extends Model
+class Siswa extends Authenticatable // Change this line
 {
     use HasFactory;
-    protected $fillable = 
-    [
-      "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "perusahaanID", "no_tlp", "foto", "alamat"
+
+    protected $fillable = [
+        "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "perusahaanID", "no_tlp", "foto", "alamat"
     ];
+
+    protected $table = 'siswa';
     protected $primaryKey = "nis";
+    
+    // If you want to use the 'password' field for authentication, ensure it's hashed.
+    protected $hidden = [
+        'password',
+    ];
     
     public function kelas()
     {

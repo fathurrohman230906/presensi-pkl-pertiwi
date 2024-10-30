@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Pembimbing extends Model
+
+class Pembimbing extends Authenticatable
 {
     use HasFactory;
 
@@ -13,6 +15,8 @@ class Pembimbing extends Model
     [
       "email", "password", "nm_lengkap", "jk", "agama", "jurusanID", "no_tlp", "foto", "alamat", "level"
     ];
+
+    protected $table = 'pembimbing';
     
     protected $primaryKey = "pembimbingID";
 

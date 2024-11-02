@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication\AuthenticationMultiuserControllers;
 use App\Http\Controllers\DashboardControllerMultiuser;
 
+use App\Http\Controllers\Admin\PerusahaanControllers;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/dashboard', function () {
+//     return view('page.admin.dashboard');
+// });
 
 // Routes untuk login
 Route::middleware(['guest:admin,pembimbing,wali_kelas,siswa'])->group(function () {
@@ -28,13 +32,13 @@ Route::middleware(['guest:admin,pembimbing,wali_kelas,siswa'])->group(function (
 
 Route::middleware(['auth:admin,pembimbing,wali_kelas,siswa'])->group(function () {
     Route::post('/logout', [AuthenticationMultiuserControllers::class, 'logout'])->name('logout.user');
-
+    
 });
 
 // Route untuk dashboard
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin-dashboard', [DashboardControllerMultiuser::class, 'DashboardAdmin'])->name('admin.dashboard');
+    Route::get('/admin-dashboard', [DashboardControllerMultiuser::class, 'DashboardAdmin'])->name('admin.perusahaan');
+    Route::get('/data-perusahaan', [PerusahaanControllers::class, 'index'])->name('admin.perusahaan');
 });
 
 Route::middleware('auth:wali_kelas')->group(function () {

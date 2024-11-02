@@ -8,29 +8,29 @@ class DashboardControllerMultiuser extends Controller
 {
     public function DashboardAdmin()
     {
-        return view('admin.home', [
-            "title" => "dashboard"
+        return view('page.admin.dashboard', [
+            "titlePage" => "dashboard"
         ]);
     }
 
     public function DashboardSiswa()
     {
         return view('siswa.dashboard', [
-            "title" => "dashboard"
+            "titlePage" => "dashboard"
         ]);
     }
 
     public function DashboardPembimbing()
     {
         return view('pembimbing.dashboard', [
-            "title" => "dashboard"
+            "titlePage" => "dashboard"
         ]);
     }
     
     public function DashboardWaliKelas()
     {
         return view('waliKelas.dashboard', [
-            "title" => "dashboard"
+            "titlePage" => "dashboard"
         ]);
     }
 }

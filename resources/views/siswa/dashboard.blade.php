@@ -1,6 +1,37 @@
 @extends('layouts.siswa.main')
 @section('content')
-<div class="section mt-2" id="presence-section">
+<style>
+    .list-kegiatan  {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-kegiatan  li {
+    border-bottom: 1px solid #ccc; /* Garis horizontal */
+    padding: 5px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.left {
+    width: 40%; /* Atur lebar sesuai kebutuhan */
+}
+
+.right {
+    width: 100%; /* Mengisi penuh */
+}
+
+.ine {
+    display: flex;
+    flex-direction: column;
+}
+
+</style>
+<div class="section" id="presence-section">
     <div class="todaypresence">
         <div class="row">
             <div class="col-6">
@@ -35,9 +66,47 @@
             </div>
         </div>
     </div>
+    <div class="presencetab mt-2">
+            <div class="tab-pane" id="profile" role="tabpanel">
+                <div class="row mb-2 d-flex justify-content-center">
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="rekappresencetitle text-center">Kegiatan Harian</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-kegiatan listview image-listview">
+                    <li>
+                        <div class="item left">
+                            <div class="in">
+                                <div>Crud Perusahaan</div>
+                                <div class="ine">
+                                    <span class="text-muted">10 Oktober 2024</span>
+                                    <span class="text-muted">10:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item right">
+                            <div class="in">
+                                <div>Revisi ERD</div>
+                                <div class="ine">
+                                    <span class="text-muted">10 Oktober 2024</span>
+                                    <span class="text-muted">10:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <div class="rekappresence">
-        <div id="chartdiv"></div>
+    {{-- <div class="rekappresence"> --}}
+        {{-- <div id="chartdiv"></div> --}}
         <!-- <div class="row">
             <div class="col-6">
                 <div class="card">
@@ -102,8 +171,8 @@
                 </div>
             </div>
         </div> -->
-    </div>
-    <div class="presencetab mt-2">
+    {{-- </div> --}}
+    {{-- <div class="presencetab mt-2">
         <div class="tab-pane fade show active" id="pilled" role="tabpanel">
             <ul class="nav nav-tabs style1" role="tablist">
                 <li class="nav-item">
@@ -283,6 +352,6 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection

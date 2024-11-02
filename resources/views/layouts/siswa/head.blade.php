@@ -20,6 +20,18 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/icon/192x192.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="manifest" href="__manifest.json">
+    <style>
+        #user-detail {
+    position: relative; /* Create a positioning context */
+}
+
+.logout-button {
+    position: absolute; /* Position it relative to the #user-detail */
+    top: 10px; /* Adjust this value as needed */
+    right: 10px; /* Adjust this value as needed */
+}
+
+    </style>
 </head>
 
 <body style="background-color:#e9ecef;">

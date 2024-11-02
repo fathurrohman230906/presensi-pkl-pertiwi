@@ -16,7 +16,7 @@ class WaliKelas extends Authenticatable
     ];
 
     protected $primaryKey = "wali_kelasID";
-    protected $table = 'wal_kelas';
+    protected $table = 'wali_kelas';
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelasID');

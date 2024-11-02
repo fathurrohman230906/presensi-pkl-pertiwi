@@ -1,67 +1,67 @@
-.message-divider{
+.message-divider {
     font-size: 12px;
     text-align: center;
     padding: 5px 0;
     color: $colorLight;
 }
-.message-item{
+.message-item {
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     padding: 2px 16px;
     margin-right: 60px;
-    .bubble{
+    .bubble {
         padding: 10px 16px;
-        background: #FFF;
+        background: #fff;
         border-radius: 16px 16px 16px 0;
         box-shadow: $boxShadow;
         color: $colorHeading;
         display: inline-block;
         margin-top: 4px;
         line-height: 1.4em;
-        .imaged{
+        .imaged {
             margin: 0px -6px;
         }
     }
-    .title{
+    .title {
         font-size: 12px;
         font-weight: $medium;
         color: $colorText;
         line-height: 1.2em;
         padding: 0 0 0 10px;
     }
-    .footer{
+    .footer {
         font-size: 12px;
         padding: 0 10px;
         text-align: right;
         line-height: 1em;
         margin-top: 5px;
         color: $colorHeading;
-        opacity: .4;
+        opacity: 0.4;
         height: 14px;
     }
-    .avatar{
+    .avatar {
         margin-right: 10px;
         width: 32px;
         height: auto;
         border-radius: 100%;
         margin-bottom: 18px;
     }
-    &.user{
+    &.user {
         justify-content: flex-end;
         margin-right: 0;
         margin-left: 60px;
-        .bubble{
+        .bubble {
             background: $colorPrimary;
-            color: #FFF;
+            color: #fff;
             border-radius: 16px 16px 0 16px;
         }
     }
 }
 
-.chatFooter{
+.chatFooter {
     min-height: 56px;
-    background: #FFF;
+    background: #fff;
     border-top: 1px solid $colorLine;
     position: fixed;
     left: 0;
@@ -74,18 +74,18 @@
     padding-left: 14px;
     padding-right: 14px;
     padding-bottom: $safeBottom;
-    .form-group{
+    .form-group {
         width: calc(100% - 100px);
-        .form-control{
+        .form-control {
             font-size: $fontSizeSub;
             border-radius: 300px;
             height: 40px;
         }
-        .clear-input{
+        .clear-input {
             height: 40px;
         }
     }
-    form{
+    form {
         width: 100%;
         display: flex;
         align-items: center;

@@ -1,10 +1,9 @@
-<div id="appCapsule">
-  <div class="section" id="user-section">
-      <div id="user-detail">
-          <div class="avatar">
-              <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
-          </div>
-          <div id="user-info">
+<div class="section" id="user-section">
+    <div id="user-detail">
+        <div class="avatar">
+            <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+        </div>
+        <div id="user-info">
             @php
             $role = session('role');
             $models = ucfirst($role);
@@ -19,21 +18,22 @@
             $user = $userClass::where($userIdField, session($userIdField))->get();
             
             $nm_lengkap = $user->pluck('nm_lengkap')->first(); // Ambil nama lengkap pertama
-            @endphp       
-              <h2 id="user-name">{{ $nm_lengkap }}</h2>
-              <span id="user-role">Head of IT</span>
-              
+            @endphp
+            <h2 id="user-name">{{ $nm_lengkap }}</h2>
+            <span id="user-role">{{ ucfirst($role) }}</span>
+            <div class="logout-button">
                 <form action="/logout" method="post">
                     @csrf
                     <input type="hidden" name="role" value="{{ $role }}">
                     <button type="submit" class="btn btn-danger">keluar</button>
                 </form>
-                
-          </div>
-      </div>
-  </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-  <div class="section" id="menu-section">
+
+{{-- <div class="section" id="menu-section">
       <div class="card">
           <div class="card-body text-center">
               <div class="list-menu">
@@ -81,4 +81,4 @@
           </div>
       </div>
   </div>
-</div>
+</div> --}}

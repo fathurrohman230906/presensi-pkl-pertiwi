@@ -12,6 +12,7 @@ class PengajuanPkl extends Model
     [
       "nis", "perusahaanID", "bulan_masuk", "bulan_keluar", "status_pengajuan"
     ];
+    
     protected $primaryKey = "pengajuanID";
 
     public function perusahaan()

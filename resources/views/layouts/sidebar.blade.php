@@ -22,7 +22,6 @@ if ($isAdmin) {
 
 $PerusahaanPage = ($titlePage === "Data Perusahaan");
 $DashboardPage = ($titlePage === "dashboard");
-
 @endphp
 
     <div class="app-brand">

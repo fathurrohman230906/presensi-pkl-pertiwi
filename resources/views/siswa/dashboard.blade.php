@@ -30,6 +30,10 @@
     flex-direction: column;
 }
 
+.presencetab {
+    padding-bottom: 5rem;
+}
+
 </style>
 <div class="section" id="presence-section">
     <div class="todaypresence">
@@ -66,13 +70,14 @@
             </div>
         </div>
     </div>
-    <div class="presencetab mt-2">
+
+    <div class="presencetab">
             <div class="tab-pane" id="profile" role="tabpanel">
                 <div class="row mb-2 d-flex justify-content-center">
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="rekappresencetitle text-center">Kegiatan Harian</h4>
+                                <h4 class="rekappresencetitle text-center mt-1">Kegiatan Harian</h4>
                             </div>
                         </div>
                     </div>

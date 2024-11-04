@@ -5,6 +5,8 @@ use App\Http\Controllers\Authentication\AuthenticationMultiuserControllers;
 use App\Http\Controllers\DashboardControllerMultiuser;
 
 use App\Http\Controllers\Admin\PerusahaanControllers;
+use App\Http\Controllers\Siswa\ProfileControllers;
+use App\Http\Controllers\Siswa\LaporanKegiatanSiswa;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +49,12 @@ Route::middleware('auth:wali_kelas')->group(function () {
 
 Route::middleware('auth:siswa')->group(function () {
     Route::get('/siswa-dashboard', [DashboardControllerMultiuser::class, 'DashboardSiswa'])->name('siswa.dashboard');
+    Route::get('/profile-siswa', [ProfileControllers::class, 'profileSiswa'])->name('profile.siswa');
+    Route::post('/edit-profile-siswa', [ProfileControllers::class, 'EditprofileSiswa'])->name('edit.profile.siswa');
+    Route::post('/edit-password-siswa', [ProfileControllers::class, 'EditPasswordSiswa'])->name('edit.password.siswa');
+    
+    Route::get('/laporan-kegiatan', [LaporanKegiatanSiswa::class, 'LaporanKegiatan'])->name('laporan.kegiatan.siswa');
+    Route::get('/create-laporan-kegiatan', [LaporanKegiatanSiswa::class, 'createLaporanKegiatan'])->name('create.kegiatan.siswa');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

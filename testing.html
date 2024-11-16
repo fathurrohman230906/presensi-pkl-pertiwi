@@ -145,7 +145,7 @@
                                                 
                                             </div>
                                         </div>
-                                        @endif
+                        @endif
                                     @endforeach
                             </div>
                     @else
@@ -193,12 +193,30 @@
     }
     
     @if (session('success'))
-    var myModal = new bootstrap.Modal(document.getElementById('harianModal-11'), {
+    var myModal = new bootstrap.Modal(document.getElementById('harianModal'), {
         keyboard: false
     });
     myModal.show();
     @endif
+
+const tanggalSekarang = new Date();
+// Menentukan nama hari dalam bahasa Indonesia
+const hariArray = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const BulanArray = ['Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+// Mendapatkan nama hari, tanggal, bulan, dan tahun
+const hari = hariArray[tanggalSekarang.getDay()];
+const tanggal = tanggalSekarang.getDate();
+const bulan = BulanArray[tanggalSekarang.getMonth()]; // getMonth() mulai dari 0 (Januari = 0)
+const tahun = tanggalSekarang.getFullYear();
+
+// Menampilkan hasil dengan format yang benar
+const currentDate = `${hari}, ${tanggal} ${bulan} ${tahun}`;
+document.getElementById('currentDateParagraph').innerText = currentDate;
+
+
 </script>
 
 </body>
 </html>
+

@@ -1,7 +1,26 @@
+<style>
+    .img-size {
+        object-fit: cover;
+        border-radius: 100%;
+        height: 100px;
+        width: 100px;
+    }
+    
+    .padding {
+        padding-top: 1rem;
+    }
+</style>
 <div class="section" id="user-section">
     <div id="user-detail">
         <div class="avatar">
-            <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+            @php
+            $nis = session('nis');
+            $Siswa = App\Models\Siswa::with('kelas', 'perusahaan')->where('nis', $nis)->get();
+            @endphp
+            @foreach ($Siswa as $DataSiswa)
+                <img id="editProfileImage" src="{{ $DataSiswa->foto ? asset('storage/FotoProfile/Siswa/' . $DataSiswa->foto) : 'assets/img/sample/avatar/avatar1.jpg' }}" class="{{ $DataSiswa->foto ? 'img-size' : 'imaged w64 rounded' }}" alt="Foto Profil">
+            @endforeach
+            {{-- <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded"> --}}
         </div>
         <div id="user-info">
             @php
@@ -19,7 +38,10 @@
             
             $nm_lengkap = $user->pluck('nm_lengkap')->first(); // Ambil nama lengkap pertama
             @endphp
-            <h2 id="user-name">{{ $nm_lengkap }}</h2>
+            @foreach ($Siswa as $DataSiswa)
+                <h2 id="user-name" class="{{ $DataSiswa->foto ? "padding" : "" }}">{{ $nm_lengkap }}</h2>
+            @endforeach
+
             <span id="user-role">{{ ucfirst($role) }}</span>
             <div class="logout-button">
                 <form action="/logout" method="post">

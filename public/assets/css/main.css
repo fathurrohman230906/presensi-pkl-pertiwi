@@ -1,0 +1,41 @@
+body {
+    background-color: #e9ecef;
+}
+
+#user-detail {
+    position: relative;
+}
+
+.card-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-size: 0.8rem;
+}
+
+.harian-card {
+    transition: transform 0.3s ease;
+}
+
+.harian-card:hover {
+    transform: scale(1.05);
+}
+/* Untuk perangkat dengan lebar layar lebih kecil dari 768px (misalnya ponsel) */
+@media screen and (max-width: 767px) {
+    .padding-card {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-bottom: 1rem;
+    }
+}
+
+/* Untuk perangkat dengan lebar layar antara 768px dan 1.3024px (misalnya tablet) */
+@media screen and (min-width: 768px) {
+    .padding-card {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}

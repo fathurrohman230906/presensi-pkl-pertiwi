@@ -19,14 +19,6 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.min.css"
     rel="stylesheet"
     />
-
-    <style>
-        /* .position-relative {
-            /* position: relative; */
-            right: 1rem;
-            bottom: 1.8rem;
-        } */
-    </style>
   </head>
   <body>
     <section class="vh-100" style="background-color: #508bfc;">

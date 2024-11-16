@@ -17,7 +17,7 @@ class PengajuanPkl extends Model
 
     public function perusahaan()
     {
-        return $this->hasMany(Perusahaan::class, 'perusahaanID');
+        return $this->belongsTo(Perusahaan::class, 'perusahaanID');
     }
 
     public function siswa()

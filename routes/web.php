@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardControllerMultiuser;
 use App\Http\Controllers\Admin\PerusahaanControllers;
 use App\Http\Controllers\Siswa\ProfileControllers;
 use App\Http\Controllers\Siswa\LaporanKegiatanSiswa;
+use App\Http\Controllers\Siswa\PermintaanPklController;
+use App\Http\Controllers\Siswa\PresensiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +20,9 @@ use App\Http\Controllers\Siswa\LaporanKegiatanSiswa;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/dashboard', function () {
 //     return view('page.admin.dashboard');
@@ -28,7 +30,7 @@ Route::get('/', function () {
 
 // Routes untuk login
 Route::middleware(['guest:admin,pembimbing,wali_kelas,siswa'])->group(function () {
-    Route::get('/login', [AuthenticationMultiuserControllers::class, 'LoginUsers'])->name('login.user');
+    Route::get('/', [AuthenticationMultiuserControllers::class, 'LoginUsers'])->name('login.user');
     Route::post('/Authentication-login', [AuthenticationMultiuserControllers::class, 'AuthenticationLogin'])->name('Authentication.login');
 });
 
@@ -54,7 +56,19 @@ Route::middleware('auth:siswa')->group(function () {
     Route::post('/edit-password-siswa', [ProfileControllers::class, 'EditPasswordSiswa'])->name('edit.password.siswa');
     
     Route::get('/laporan-kegiatan', [LaporanKegiatanSiswa::class, 'LaporanKegiatan'])->name('laporan.kegiatan.siswa');
-    Route::get('/create-laporan-kegiatan', [LaporanKegiatanSiswa::class, 'createLaporanKegiatan'])->name('create.kegiatan.siswa');
+    Route::post('/create-laporan-kegiatan', [LaporanKegiatanSiswa::class, 'createLaporanKegiatan'])->name('create.kegiatan.siswa');
+    Route::post('/checkbox-kegiatan-siswa', [LaporanKegiatanSiswa::class, 'checkboxKegiatanSiswa'])->name('checkbox.kegiatan.siswa');
+    Route::post('/delete-kegiatan-siswa', [LaporanKegiatanSiswa::class, 'deleteKegiatanSiswa'])->name('hapus.kegiatan.siswa');
+    Route::post('/cari-kegiatan-siswa', [LaporanKegiatanSiswa::class, 'cariKegiatanSiswa'])->name('cari.kegiatan.siswa');
+    Route::get('/result-cari-kegiatan-siswa/{tgl_kegiatan}', [LaporanKegiatanSiswa::class, 'resultCariKegiatanSiswa'])->name('result.cari.kegiatan.siswa');
+    
+    Route::get('/permintaan-pkl', [PermintaanPklController::class, 'permintaanPkl'])->name('permintaan.pkl');
+    Route::get('/permintaan-pkl/create', [PermintaanPklController::class, 'CreatepermintaanPkl'])->name('create.permintaan.pkl');
+    Route::post('/permintaan-pkl/create-pkl', [PermintaanPklController::class, 'StorepermintaanPkl'])->name('proses.create.permintaan.pkl');
+    Route::get('/permintaan-pkl/cetak', [PermintaanPklController::class, 'CetakPermintaanPKL'])->name('proses.cetak.permintaan.pkl');
+    
+    Route::get('/internship-presensi', [PresensiController::class, 'Presensi'])->name('presensi.siswa');
+    Route::post('/internship-presensi/presensi', [PresensiController::class, 'ProsesPresensi'])->name('proses.presensi.siswa');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

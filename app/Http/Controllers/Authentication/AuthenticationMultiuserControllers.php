@@ -66,7 +66,7 @@ class AuthenticationMultiuserControllers extends Controller
             }
         }
     
-        return redirect('/')->with('loginError', 'Login gagal, silahkan coba lagi.');
+        return redirect()->route('login.user')->with('loginError', 'Login gagal, silahkan coba lagi.');
     }
 
     public function logout(Request $request)

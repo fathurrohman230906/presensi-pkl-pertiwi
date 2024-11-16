@@ -39,6 +39,7 @@
     <div class="todaypresence">
         <div class="row">
             <div class="col-6">
+                <a href="/internship-presensi">
                 <div class="card gradasigreen">
                     <div class="card-body">
                         <div class="presencecontent">
@@ -46,14 +47,16 @@
                                 <ion-icon name="camera"></ion-icon>
                             </div>
                             <div class="presencedetail">
-                                <h4 class="presencetitle">Masuk</h4>
-                                <span>07:00</span>
+                                    <h4 class="presencetitle">Masuk</h4>
+                                    <span>07:00</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-6">
+                <a href="/internship-presensi">
                 <div class="card gradasired">
                     <div class="card-body">
                         <div class="presencecontent">
@@ -61,55 +64,60 @@
                                 <ion-icon name="camera"></ion-icon>
                             </div>
                             <div class="presencedetail">
-                                <h4 class="presencetitle">Pulang</h4>
-                                <span>12:00</span>
+                                    <h4 class="presencetitle">Pulang</h4>
+                                    <span>12:00</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
 
     <div class="presencetab">
-            <div class="tab-pane" id="profile" role="tabpanel">
-                <div class="row mb-2 d-flex justify-content-center">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="rekappresencetitle text-center mt-1">Kegiatan Harian</h4>
-                            </div>
+        <div class="tab-pane" id="profile" role="tabpanel">
+            <div class="row mb-2 d-flex justify-content-center">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="rekappresencetitle text-center mt-1">Kegiatan Harian</h4>
                         </div>
                     </div>
                 </div>
-                <ul class="list-kegiatan listview image-listview">
-                    <li>
-                        <div class="item left">
-                            <div class="in">
-                                <div>Crud Perusahaan</div>
-                                <div class="ine">
-                                    <span class="text-muted">10 Oktober 2024</span>
-                                    <span class="text-muted">10:00</span>
+            </div>
+            <ul class="list-kegiatan listview image-listview">
+                @if ($KegiatanPkl && $KegiatanPkl->count() > 0)
+                    @foreach ($KegiatanPkl as $DataKegiatan)
+                        @php
+                            $tgl_kegiatan = \Carbon\Carbon::parse($DataKegiatan->tgl_kegiatan)->format('d F Y');
+                            $waktu = \Carbon\Carbon::parse($DataKegiatan->created_at)->format('H:i:s');
+                        @endphp
+                        <li>
+                            <div class="item right">
+                                <div class="in">
+                                    <div>{{ $DataKegiatan->deskripsi_kegiatan }}</div>
+                                    <div class="ine">
+                                        <span class="text-muted">{{ $tgl_kegiatan }}</span>
+                                        <span class="text-muted">{{ $waktu }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endforeach
+                @else
                     <li>
                         <div class="item right">
                             <div class="in">
-                                <div>Revisi ERD</div>
-                                <div class="ine">
-                                    <span class="text-muted">10 Oktober 2024</span>
-                                    <span class="text-muted">10:00</span>
-                                </div>
+                                <div class="p-2">Tidak ada kegiatan hari ini</div>
                             </div>
                         </div>
                     </li>
-                </ul>
-            </div>
+                @endif
+            </ul>
         </div>
     </div>
-
+    
     {{-- <div class="rekappresence"> --}}
         {{-- <div id="chartdiv"></div> --}}
         <!-- <div class="row">

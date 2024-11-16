@@ -11,8 +11,9 @@ class KegiatanPkl extends Model
 
     protected $fillable = 
     [
-      "deskripsi_kegiatan", "tgl_kegiatan", "nis"
+      "deskripsi_kegiatan", "tgl_kegiatan", "nis", "status_kegiatan"
     ];
+    protected $table = "kegiatan_pkl";
     protected $primaryKey = "kegiatanID";
 
     public function siswa()

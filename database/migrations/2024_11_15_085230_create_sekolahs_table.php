@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kegiatan_pkl', function (Blueprint $table) {
-            $table->id('kegiatanID');
-            $table->string('deskripsi_kegiatan');
-            $table->date('tgl_kegiatan');
-            $table->foreignId('nis')->constrained('siswa', 'nis')->onDelete('cascade');
-            $table->string('status_kegiatan')->nullable();
+        Schema::create('sekolah', function (Blueprint $table) {
+            $table->id('sekolahID');
+            $table->string('nm_sekolah');
+            $table->string('pendiri');
+            $table->string('no_tlp');
+            $table->text('alamat');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kegiatan_pkl');
+        Schema::dropIfExists('sekolah');
     }
 };

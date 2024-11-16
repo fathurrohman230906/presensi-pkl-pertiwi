@@ -13,6 +13,7 @@ class Perusahaan extends Model
       "pendiri", "nm_perusahaan", "deskripsi", "alamat"
     ];
     protected $primaryKey = "perusahaanID";
+    protected $table = "perusahaan";
     
     public function siswa()
     {

@@ -1,5 +1,5 @@
 <div class="appBottomMenu">
-  <a href="#" class="item">
+  <a href="/permintaan-pkl" class="item">
       <div class="col">
           <ion-icon name="file-tray-full-outline" role="img" class="md hydrated"
               aria-label="file tray full outline"></ion-icon>

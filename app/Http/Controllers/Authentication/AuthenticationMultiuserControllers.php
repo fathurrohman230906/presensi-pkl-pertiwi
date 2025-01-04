@@ -50,6 +50,7 @@ class AuthenticationMultiuserControllers extends Controller
                     case 'pembimbing':
                         $request->session()->put('pembimbingID', $user->pembimbingID);
                         $request->session()->put('nm_lengkap', $user->nm_lengkap);
+                        $request->session()->put('level', $user->level);
                         return redirect('/pembimbing-dashboard')->with('success', 'Anda berhasil login');
     
                     case 'siswa':
@@ -71,6 +72,7 @@ class AuthenticationMultiuserControllers extends Controller
 
     public function logout(Request $request)
     {
+        // dd($request->all());
         $role = $request->input('role');
 
         // $nama_lengkap = '';
@@ -85,6 +87,11 @@ class AuthenticationMultiuserControllers extends Controller
                 $pembimbing = Auth::guard('pembimbing')->user();
                 $nama_lengkap = $pembimbing->nm_lengkap;
                 Auth::guard('pembimbing')->logout();
+                break;
+            case 'wali_kelas':
+                $wali_kelas = Auth::guard('wali_kelas')->user();
+                $nama_lengkap = $wali_kelas->nm_lengkap;
+                Auth::guard('wali_kelas')->logout();
                 break;
             case 'siswa':
                 $siswa = Auth::guard('siswa')->user();

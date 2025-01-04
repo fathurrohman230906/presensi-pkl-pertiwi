@@ -10,7 +10,7 @@ class Perusahaan extends Model
     use HasFactory;
     protected $fillable = 
     [
-      "pendiri", "nm_perusahaan", "deskripsi", "alamat"
+      "pendiri", "nm_perusahaan","email", "no_tlp", "deskripsi", "alamat", "jurusanID"
     ];
     protected $primaryKey = "perusahaanID";
     protected $table = "perusahaan";
@@ -33,5 +33,10 @@ class Perusahaan extends Model
     public function pengajuan_pkl()
     {
         return $this->hasMany(PengajuanPkl::class, 'perusahaanID');
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'jurusanID');
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('jk', ['L', 'P']);
             $table->string('agama');
             $table->foreignId('kelasID')->constrained('kelas', 'kelasID')->onDelete('cascade')->nullable();
-            $table->integer('no_tlp')->nullable();
+            $table->string('no_tlp')->nullable();
             $table->string('foto')->nullable();
             $table->text('alamat');
             $table->timestamps();

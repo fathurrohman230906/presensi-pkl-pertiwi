@@ -20,9 +20,13 @@
             margin-left: 5rem;
         }
         
-        .ms-button-edit {
-            margin-left: 11.5rem;
+        /* Media Query untuk Laptop/Komputer (min-width 1024px) */
+        @media (min-width: 1024px) {
+            .ms-button-edit {
+                margin-left: 14.5rem;
+            }
         }
+
 
         .image-size {
             width: 100px; 
@@ -130,12 +134,12 @@
             </div>
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <form action="{{ route('edit.profile.siswa') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="pe-4 ps-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>Edit Profile</h5>
+            <div class="pe-4 ps-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Edit Profile</h4>
+                        <form action="{{ route('edit.profile.siswa') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group text-center">
                                 <img id="editProfileImage" src="{{ $DataSiswa->foto ? asset('storage/FotoProfile/Siswa/' . $DataSiswa->foto) : 'https://via.placeholder.com/150' }}" class="{{ $DataSiswa->foto ? 'image-size' : 'rounded-circle' }} mb-3" alt="Foto Profil">
                                 <div class="form-group ms-foto d-flex align-items-center justify-content-center">
@@ -198,13 +202,48 @@
                                         <textarea class="form-control" name="alamat" id="description" rows="3">{{ $DataSiswa->alamat }}</textarea>
                                     </div>
                                 </div>
-
+                                
                                 <button type="submit" class="btn btn-warning ms-button-edit"><i class="bi bi-pencil-square"></i> Edit</button>
+                            </div>
+                        </form>
+
+                        <h4 class="mt-3">Data Perusahaan</h4>
+
+                        <form action="{{ route('edit.pengajuan.pkl.siswa') }}" method="post">
+                            @csrf
+                            @foreach ($pengajuan_pkl as $DatapengajuanPkl)
+                                
+                            <div class="mb-3 row">
+                                <label for="description" class="col-sm-2 col-form-label">Jam Masuk PKL</label>
+                                <div class="col-sm-10">
+                                    <input type="time" class="form-control" name="jam_masuk" value="{{ $DatapengajuanPkl->jam_masuk }}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="description" class="col-sm-2 col-form-label">Jam Pulang PKL</label>
+                                <div class="col-sm-10">
+                                    <input type="time" class="form-control" name="jam_keluar" value="{{ $DatapengajuanPkl->jam_keluar }}">
+                                </div>
+                            </div>
+                            @endforeach
+
+                            <button type="submit" class="btn btn-warning ms-button-edit"><i class="bi bi-pencil-square"></i>Edit</button>
+                        </form>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="fw-bold">Keterangan :</p>
+                                        <p>AM = 00.00 hingga 11.59</p>
+                                        <p>PM = 12.00 hingga 23.59</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
             <form action="{{ route('edit.password.siswa') }}" method="post" enctype="multipart/form-data">

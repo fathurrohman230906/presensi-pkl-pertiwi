@@ -11,9 +11,10 @@ class Presensi extends Model
 
     protected $fillable = 
     [
-      "nis", "perusahaanID", "tgl_presensi", "masuk", "pulang", "status_presensi", "keterangan", "foto", "latitude", "longitude"
+      "nis", "perusahaanID", "tgl_presensi", "masuk", "pulang", "status_presensi", "keterangan", "foto", "foto_pulang", "latitude", "longitude", "status_absen"
     ];
     protected $primaryKey = "presensiID";
+    protected $table = "presensi";
 
     public function perusahaan()
     {

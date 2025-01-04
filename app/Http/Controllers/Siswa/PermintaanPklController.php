@@ -47,7 +47,15 @@ class PermintaanPklController extends Controller
     
 
     public function CreatepermintaanPkl() {
-        $perusahaan = Perusahaan::with('siswa', 'pengajuan_pkl')->get();
+        $nis = session('nis');
+        $siswa = Siswa::with('kelas')->where('nis', session('nis'));
+
+        $kelasID = $siswa->first()->kelasID;
+        
+        $kelas = Kelas::with('jurusan')->where('kelasID', $kelasID);
+        $jurusanID = $kelas->first()->jurusanID;
+
+        $perusahaan = Perusahaan::with('siswa', 'pengajuan_pkl')->where('jurusanID', $jurusanID)->get();
         return view('siswa.PermintaanPkl.create-permintaan', [
             "titlePage" => "Permintaan PKL",
             "dataPerusahaan" => $perusahaan,

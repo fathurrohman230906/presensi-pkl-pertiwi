@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\PengajuanPkl;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Redis;
@@ -14,9 +15,11 @@ class ProfileControllers extends Controller
     {
         $nis = session('nis');
         $Siswa = Siswa::with('kelas', 'perusahaan')->where('nis', $nis)->get();
+        $pengajuan_pkl = PengajuanPkl::with('perusahaan', 'siswa')->where('nis', $nis)->get();
         return view('siswa.profile.profile-siswa', [
             "titlePage" => "Profile Siswa",
-            "siswa" => $Siswa
+            "siswa" => $Siswa,
+            "pengajuan_pkl" => $pengajuan_pkl,
         ]);
     }
 

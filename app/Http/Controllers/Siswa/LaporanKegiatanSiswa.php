@@ -11,58 +11,69 @@ use App\Models\PengajuanPkl;
 
 class LaporanKegiatanSiswa extends Controller
 {   
-    
 public function LaporanKegiatan() 
 {
     $KegiatanPkl = KegiatanPkl::all();
-    
-    // Check if the database has data, if not, use the current date
-    if ($KegiatanPkl->isEmpty() || $KegiatanPkl->groupBy('tgl_kegiatan') == null) {
-        $bulanTahun = [Carbon::now()->format('F Y')]; // Array of current month-year if no data
-    } else {
-        // Extract unique 'tgl_kegiatan' formatted as 'F Y' (e.g., "October 2024")
+        
         $bulanTahun = $KegiatanPkl->pluck('tgl_kegiatan')->map(function ($tgl) {
-            return Carbon::parse($tgl)->format('F Y');
-        })->unique(); 
-    }
-
-    // Get the current date for fallback
+            return Carbon::parse($tgl)->format('F Y'); // Ubah format menjadi "Bulan Tahun"
+        })->unique();
+        
+        // Cek bulan dan tahun saat ini
+        $currentMonthYear = Carbon::now()->format('F Y');
+        
+        // Jika bulan dan tahun saat ini tidak ada di koleksi, tambahkan secara manual
+        if (!$bulanTahun->contains($currentMonthYear)) {
+            $bulanTahun->push($currentMonthYear);
+        }
+    
+    // Current date
     $currentDate = Carbon::now();
     $formattedDate = $currentDate->format('d-m-Y');
-    $fullDate = $currentDate->locale('id')->isoFormat('dddd, D MMMM YYYY');  // Full date format in Indonesian
+    $fullDate = $currentDate->locale('id')->isoFormat('dddd, D MMMM YYYY');
 
-    // Retrieve the student's activities grouped by date
+    // Get student activities based on NIS
     $nis = session('nis');
+    $tgl_kegiatan_sekarang = Carbon::now()->format('Y-m-d'); // Today's date
+    // dd($tgl_kegiatan_sekarang);
     $KegiatanPklSiswa = KegiatanPkl::with('siswa')->where('nis', $nis)->get();
 
-    // Group the activities by 'tgl_kegiatan' (date)
+    // Group activities by date
     if ($KegiatanPklSiswa->isNotEmpty()) {
         $tglKegiatan = $KegiatanPklSiswa->groupBy('tgl_kegiatan');
-    } else {
-        $tglKegiatan = collect([$formattedDate => collect()]);
-    }
-    
-    // Retrieve the student's PKL application data
-    $PengajuanPkl = PengajuanPkl::with('perusahaan', 'siswa')->where('nis', $nis)->get();
-    
-    foreach ($PengajuanPkl as $PengajuanbulanPKL) {
-        $bulan_masuk = Carbon::parse($PengajuanbulanPKL->bulan_masuk)->format('m');
-        $bulan_keluar = Carbon::parse($PengajuanbulanPKL->bulan_keluar)->format('m');
     }
 
-    // Pass the filtered KegiatanPkl and other data to the view
+    // If no activities for today, initialize empty collection for today's activities
+    if (!isset($tglKegiatan[$tgl_kegiatan_sekarang])) {
+        $tglKegiatan[$tgl_kegiatan_sekarang] = collect(); 
+    }
+
+    $formattedTgl = Carbon::now()->format('m-Y');
+    // Fetch the student's internship application data for the entry and exit months
+    $PengajuanPkl = PengajuanPkl::with('perusahaan', 'siswa')->where('nis', $nis)->get();
+
+    foreach ($PengajuanPkl as $PengajuanbulanPKL) {
+        $bulan_masuk = Carbon::parse($PengajuanbulanPKL->bulan_masuk)->format('m');
+        $tahun_masuk = Carbon::parse($PengajuanbulanPKL->bulan_masuk)->format('Y');
+        
+        $bulan_keluar = Carbon::parse($PengajuanbulanPKL->bulan_keluar)->format('m');
+        $tahun_keluar = Carbon::parse($PengajuanbulanPKL->bulan_keluar)->format('Y');
+    }
+
+    // Pass data to the view
     return view('siswa.kegiatan.kegiatan-pkl', [
         "titlePage" => "Kegiatan Siswa",
-        "KegiatanPkl" => $tglKegiatan, // Filtered kegiatan by nis
+        "KegiatanPkl" => $tglKegiatan,
         "bulanTahun" => $bulanTahun, 
         "fullDate" => $fullDate, 
         "bulan_masuk" => $bulan_masuk, 
         "bulan_keluar" => $bulan_keluar, 
+        "tahun_keluar" => $tahun_keluar, 
+        "tahun_masuk" => $tahun_masuk, 
+        "formattedTgl" => $formattedTgl, 
+        "currentDate" => $currentDate->format('Y-m-d'), // Send today's date
     ]);
 }
-
-    
-
 
     public function createLaporanKegiatan(Request $request) 
     {
@@ -79,7 +90,8 @@ public function LaporanKegiatan()
         $kegiatanPKL = KegiatanPkl::create($DataKegiatan);
     
         // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Berhasil');
+        return redirect()->back()->with('success', 'Berhasil')->with('bulanTahun', $request->input('bulanTahun'));
+        // return redirect()->back()->with('success', 'Berhasil');
         // return redirect()->route('laporan.kegiatan.siswa')->with('success', 'Berhasil');
     }
     
@@ -92,7 +104,8 @@ public function LaporanKegiatan()
             "status_kegiatan" => "diterima", // Assuming you're setting the status to true, adjust as needed
         ]);
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Data kegiatan siswa telah diperbarui!');
+        return redirect()->back()->with('success', 'Berhasil')->with('bulanTahun', $request->input('bulanTahun'));
+        // return redirect()->back()->with('success', 'Data kegiatan siswa telah diperbarui!');
     }
 
     public function deleteKegiatanSiswa(Request $request)
@@ -103,28 +116,46 @@ public function LaporanKegiatan()
 
         $KegiatanPkl = KegiatanPkl::where('kegiatanID', $request->kegiatanID);
         $KegiatanPkl->delete();
-        return redirect()->back()->with('success', 'Data kegiatan siswa telah diperbarui!');
+        return redirect()->back()->with('success', 'Berhasil')->with('bulanTahun', $request->input('bulanTahun'));
+        // return redirect()->back()->with('success', 'Data kegiatan siswa telah diperbarui!');
     }
 
-    public function cariKegiatanSiswa(Request $request) {
-        // If the user provides a specific date, extract the year from the provided date
-        $BulanFilter = $request->tgl_kegiatan;
-        // Filter by the year of 'tgl_kegiatan'
-        $KegiatanPkl = KegiatanPkl::whereMonth('tgl_kegiatan', $BulanFilter);
-        
-        // Get unique years of the filtered 'tgl_kegiatan'
-        $Bulan = $KegiatanPkl->pluck('tgl_kegiatan')
-        ->map(function ($tgl) {
-            return Carbon::parse($tgl)->format('m');
-        })
-        ->unique();
-        // Check if the yearFilter exists in the unique years collection
-        if ($Bulan->contains($BulanFilter)) {
-            return redirect('result-cari-kegiatan-siswa/'. $BulanFilter);
+    public function cariKegiatanSiswa(Request $request)
+    {
+        // dd($request->all());
+        // Ambil input tgl_kegiatan, pastikan dalam format 'MM-YYYY'
+        $inputDate = $request->tgl_kegiatan;
+        try {
+            // Parse input menjadi bulan dan tahun
+            $parsedDate = Carbon::createFromFormat('m-Y', $inputDate);
+            $bulan = $parsedDate->month; // Contoh: 11
+            $tahun = $parsedDate->year;  // Contoh: 2024
+        } catch (\Exception $e) {
+            // Jika format salah, kembali ke halaman laporan dengan pesan error
+            return redirect()->route('laporan.kegiatan.siswa')
+                             ->withErrors(['tgl_kegiatan' => 'Format tanggal tidak valid. Gunakan format MM-YYYY.']);
+        }
+    
+        // Filter berdasarkan bulan dan tahun
+        $KegiatanPkl = KegiatanPkl::whereMonth('tgl_kegiatan', $bulan)
+                                   ->whereYear('tgl_kegiatan', $tahun);
+    
+        // Ambil tahun-bulan unik dari tgl_kegiatan
+        $bulanTahunUnik = $KegiatanPkl->pluck('tgl_kegiatan')
+                                      ->map(function ($tgl) {
+                                          return Carbon::parse($tgl)->format('Y-m');
+                                      })
+                                      ->unique();
+    
+        // Check apakah data untuk bulan-tahun tersebut ada
+        $bulanFilterFormat = $parsedDate->format('Y-m'); // Format sebagai 'YYYY-MM'
+        if ($bulanTahunUnik->contains($bulanFilterFormat)) {
+            return redirect('result-cari-kegiatan-siswa/' . $inputDate);
         } else {
             return redirect()->route('laporan.kegiatan.siswa');
         }
     }
+    
 
     public function resultCariKegiatanSiswa($tgl_kegiatan) 
     {
@@ -144,7 +175,6 @@ public function LaporanKegiatan()
             // Jika tidak ada parameter $tgl_kegiatan, gunakan bulan dan tahun sekarang
             $formattedTgl = Carbon::now()->format('Y-m'); // Gunakan bulan dan tahun sekarang
         }
-        
         // Ambil semua data kegiatan PKL sesuai dengan bulan dan tahun yang diformat
         $KegiatanPkl = KegiatanPkl::whereYear('tgl_kegiatan', Carbon::parse($formattedTgl)->year)
                                    ->whereMonth('tgl_kegiatan', Carbon::parse($formattedTgl)->month)
@@ -175,6 +205,7 @@ public function LaporanKegiatan()
         
         // Kelompokkan kegiatan berdasarkan tanggal
         if ($KegiatanPklSiswa->isNotEmpty()) {
+
             $tglKegiatan = $KegiatanPklSiswa->groupBy('tgl_kegiatan');
         } else {
             $tglKegiatan = collect([$formattedDate => collect()]); // Fallback jika tidak ada kegiatan untuk siswa
@@ -191,7 +222,10 @@ public function LaporanKegiatan()
         
         foreach ($PengajuanPkl as $PengajuanbulanPKL) {
             $bulan_masuk = Carbon::parse($PengajuanbulanPKL->bulan_masuk)->format('m');
+            $tahun_masuk = Carbon::parse($PengajuanbulanPKL->bulan_masuk)->format('Y');
+            
             $bulan_keluar = Carbon::parse($PengajuanbulanPKL->bulan_keluar)->format('m');
+            $tahun_keluar = Carbon::parse($PengajuanbulanPKL->bulan_keluar)->format('Y');
         }
         
         // Kirim data ke tampilan (view)
@@ -202,6 +236,9 @@ public function LaporanKegiatan()
             "fullDate" => $fullDate, // Tanggal penuh dalam format Indonesia
             "bulan_masuk" => $bulan_masuk, // Bulan masuk PKL
             "bulan_keluar" => $bulan_keluar, // Bulan keluar PKL
+            "tahun_keluar" => $tahun_keluar, 
+            "tahun_masuk" => $tahun_masuk, 
+            "formattedTgl" => $formattedTgl, 
         ]);
     }
     

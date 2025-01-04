@@ -43,18 +43,30 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="d-flex">
-                                    <select name="tgl_kegiatan" class="form-select" aria-label="Pilih Bulan">
-                                        @if ($bulan_masuk <= $bulan_keluar)
-                                        <option disabled selected>---- Pilih Bulan ----</option>
-                                        <option value="semua">Semua Bulan</option>
-                                        @for ($bulan = $bulan_masuk; $bulan <= $bulan_keluar; $bulan++)
-                                            <option value="{{ $bulan }}">{{ \Carbon\Carbon::createFromFormat('m', $bulan)->format('F') }}</option>
-                                        @endfor
-                                        @else
-                                            <p>Invalid month range</p>
-                                        @endif
-                                    
-                                    </select>
+                                <select name="tgl_kegiatan" class="form-select" aria-label="Pilih Bulan">
+                                    <option disabled selected>---- Pilih Bulan ----</option>
+                                    <option value="semua">Semua Bulan</option>
+                                    @if ($tahun_keluar > $tahun_masuk || ($tahun_keluar == $tahun_masuk && $bulan_keluar >= $bulan_masuk))
+        @for ($tahun = $tahun_masuk; $tahun <= $tahun_keluar; $tahun++)
+            @php
+                $start_bulan = ($tahun == $tahun_masuk) ? $bulan_masuk : 1;
+                $end_bulan = ($tahun == $tahun_keluar) ? $bulan_keluar : 12;
+            @endphp
+            @for ($bulan = $start_bulan; $bulan <= $end_bulan; $bulan++)
+            {{-- <span>@if ($formattedTgl === $bulan . "-" . $tahun)</span> --}}
+            <option value="{{ $bulan }}-{{ $tahun }}"
+            @if (\Carbon\Carbon::parse($formattedTgl)->format('m-Y') === $bulan . "-" . $tahun) selected @endif
+            >
+                {{ \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->format('F Y') }}
+            </option>
+        
+            @endfor
+        @endfor
+    @else
+        <p>Invalid month range</p>
+    @endif
+    
+                                </select>
                                 
                                 <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
                             </div>

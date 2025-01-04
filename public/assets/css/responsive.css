@@ -1,0 +1,54 @@
+/* Background color for the body */
+body {
+    background-color: #37517e !important;
+}
+
+/* Loader */
+#loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#loader .loading-icon {
+    width: 42px;
+    height: auto;
+    animation: loadingAnimation 1s infinite;
+}
+
+@keyframes loadingAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Margin top class */
+.margin-top {
+    margin-top: 3rem;
+}
+
+/* Webcam capture styling */
+.webcam-capture,
+.webcam-capture video {
+    display: inline-block;
+    width: 100% !important;
+    margin: auto !important;
+    border-radius: 15px;
+}
+
+/* Map styling */
+#map {
+    border-radius: 15px;
+    height: 400px;
+    width: 400px;
+}

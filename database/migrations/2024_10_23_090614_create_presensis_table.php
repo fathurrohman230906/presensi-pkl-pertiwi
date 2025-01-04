@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('pulang');
             $table->enum('status_presensi', ['hadir', 'sakit', 'izin']);
             $table->string('keterangan');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->string('latitude');
             $table->string('longitude');
             $table->timestamps();

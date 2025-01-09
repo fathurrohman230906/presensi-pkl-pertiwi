@@ -100,97 +100,124 @@
 <!-- Edit Profile Tab -->
 <div class="tab-pane fade" id="EditProfileContent">
   <div class="row">
-      <div class="col-12">
-          <div class="card card-default">
-              <div class="card-header">
-                  <h2>Edit Profile</h2>
+    <div class="col-12">
+      <div class="card card-default">
+        <div class="card-header">
+          <h2>Edit Profile</h2>
+        </div>
+        <div class="card-body">
+          <!-- Form Edit Profile -->
+          <form action="{{ route('edit.profile.user') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <!-- Hidden Role Input -->
+            <input type="hidden" name="role" value="{{ session('role') }}">
+
+            <div class="row">
+              <!-- Nama Lengkap -->
+              <div class="col-md-6 mb-3">
+                <label for="nm_lengkap" class="form-label">Nama Lengkap</label>
+                <input type="text" name="nm_lengkap" class="form-control" id="nm_lengkap" value="{{ old('nm_lengkap', $DataUser->nm_lengkap) }}">
+                @error('nm_lengkap')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
               </div>
-              <div class="card-body">
-                  <!-- Form Edit Profile -->
-                  <form action="{{ route('edit.profile.user') }}" method="post" enctype="multipart/form-data">
-                      @csrf
-                      <!-- Pastikan untuk mengirim role jika diperlukan -->
-                      <input type="hidden" name="role" value="{{ session('role') }}">
-                      
-                      <div class="row">
-                          <!-- Nama Lengkap -->
-                          <div class="col-md-6 mb-3">
-                              <label for="nm_lengkap" class="form-label">Nama Lengkap</label>
-                              <input type="text" name="nm_lengkap" class="form-control" id="nm_lengkap" value="{{ old('nm_lengkap', $DataUser->nm_lengkap) }}">
-                              @error('nm_lengkap')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
 
-                          <!-- Jenis Kelamin -->
-                          <div class="col-md-6 mb-3">
-                              <label for="jk" class="form-label">Jenis Kelamin</label>
-                              <select class="form-select" id="jk" name="jk">
-                                  <option value="L" {{ old('jk', $DataUser->jk) == 'L' ? 'selected' : '' }}>Laki-Laki</option>
-                                  <option value="P" {{ old('jk', $DataUser->jk) == 'P' ? 'selected' : '' }}>Perempuan</option>
-                              </select>
-                              @error('jk')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
-
-                          <!-- Agama -->
-                          <div class="col-md-6 mb-3">
-                              <label for="agama" class="form-label">Agama</label>
-                              <select class="form-select" id="agama" name="agama">
-                                  <option value="Islam" {{ old('agama', $DataUser->agama) == 'Islam' ? 'selected' : '' }}>Islam</option>
-                                  <option value="Kristen" {{ old('agama', $DataUser->agama) == 'Kristen' ? 'selected' : '' }}>Kristen</option>
-                                  <option value="Katolik" {{ old('agama', $DataUser->agama) == 'Katolik' ? 'selected' : '' }}>Katolik</option>
-                                  <option value="Hindu" {{ old('agama', $DataUser->agama) == 'Hindu' ? 'selected' : '' }}>Hindu</option>
-                                  <option value="Buddha" {{ old('agama', $DataUser->agama) == 'Buddha' ? 'selected' : '' }}>Buddha</option>
-                                  <option value="Konghucu" {{ old('agama', $DataUser->agama) == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
-                                  <option value="Lainnya" {{ old('agama', $DataUser->agama) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
-                              </select>
-                              @error('agama')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
-
-                          <!-- No Telp -->
-                          <div class="col-md-6 mb-3">
-                              <label for="no_tlp" class="form-label">Nomor Telepon</label>
-                              <input type="text" name="no_tlp" class="form-control" id="no_tlp" value="{{ old('no_tlp', $no_tlp) }}">
-                              @error('no_tlp')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
-
-                          <!-- Alamat -->
-                          <div class="col-md-6 mb-3">
-                              <label for="alamat" class="form-label">Alamat</label>
-                              <textarea class="form-control" name="alamat" id="alamat" rows="3">{{ old('alamat', $DataUser->alamat) }}</textarea>
-                              {{-- <input type="text" name="alamat" class="form-control" id="alamat" value="{{ old('alamat', $DataUser->alamat) }}"> --}}
-                              @error('alamat')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
-
-                          <!-- Foto Profile -->
-                          <div class="col-md-6 mb-3">
-                              <label for="foto" class="form-label">Foto Profil</label>
-                              <input type="file" class="form-control" id="foto" name="foto">
-                              <small>Format: jpeg, png, jpg, gif</small>
-                              @error('foto')
-                                  <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                          </div>
-                          
-                      </div>
-
-                      <!-- Tombol Submit -->
-                      <button type="submit" class="btn btn-warning"><i class="bi bi-pencil me-2"></i>Edit Profile</button>
-                  </form>
+              <!-- Jenis Kelamin -->
+              <div class="col-md-6 mb-3">
+                <label for="jk" class="form-label">Jenis Kelamin</label>
+                <select class="form-select" id="jk" name="jk">
+                  <option value="L" {{ old('jk', $DataUser->jk) == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                  <option value="P" {{ old('jk', $DataUser->jk) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                </select>
+                @error('jk')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
               </div>
-          </div>
+
+              @if(session('role') == 'admin') 
+              <!-- Alamat -->
+              <div class="col-md-6 mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea class="form-control" name="alamat" id="alamat" rows="3">{{ old('alamat', $DataUser->alamat) }}</textarea>
+                @error('alamat')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              
+              <!-- Agama -->
+              <div class="col-md-6 mb-3">
+                <label for="agama" class="form-label">Agama</label>
+                <select class="form-select" id="agama" name="agama">
+                  <option value="Islam" {{ old('agama', $DataUser->agama) == 'Islam' ? 'selected' : '' }}>Islam</option>
+                  <option value="Kristen" {{ old('agama', $DataUser->agama) == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                  <option value="Katolik" {{ old('agama', $DataUser->agama) == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                  <option value="Hindu" {{ old('agama', $DataUser->agama) == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                  <option value="Buddha" {{ old('agama', $DataUser->agama) == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                  <option value="Konghucu" {{ old('agama', $DataUser->agama) == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+                  <option value="Lainnya" {{ old('agama', $DataUser->agama) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
+                @error('agama')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              @else
+              <!-- Agama -->
+              <div class="col-md-6 mb-3">
+                <label for="agama" class="form-label">Agama</label>
+                <select class="form-select" id="agama" name="agama">
+                  <option value="Islam" {{ old('agama', $DataUser->agama) == 'Islam' ? 'selected' : '' }}>Islam</option>
+                  <option value="Kristen" {{ old('agama', $DataUser->agama) == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                  <option value="Katolik" {{ old('agama', $DataUser->agama) == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                  <option value="Hindu" {{ old('agama', $DataUser->agama) == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                  <option value="Buddha" {{ old('agama', $DataUser->agama) == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                  <option value="Konghucu" {{ old('agama', $DataUser->agama) == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+                  <option value="Lainnya" {{ old('agama', $DataUser->agama) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
+                @error('agama')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+
+              <!-- Alamat -->
+              <div class="col-md-6 mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea class="form-control" name="alamat" id="alamat" rows="3">{{ old('alamat', $DataUser->alamat) }}</textarea>
+                @error('alamat')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+              @endif
+              
+              <!-- No Telp (Hide for Admin role) -->
+              <div class="col-md-6 mb-3 @if(session('role') == 'admin') d-none @endif">
+                <label for="no_tlp" class="form-label">Nomor Telepon</label>
+                <input type="text" name="no_tlp" class="form-control" id="no_tlp" value="{{ old('no_tlp', $no_tlp) }}">
+                @error('no_tlp')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+
+
+              <!-- Foto Profil (Placed Next to Alamat) -->
+              <div class="col-md-6 mb-3">
+                <label for="foto" class="form-label">Foto Profil</label>
+                <input type="file" class="form-control" id="foto" name="foto">
+                <small>Format: jpeg, png, jpg, gif</small>
+                @error('foto')
+                  <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
+
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-warning"><i class="bi bi-pencil me-2"></i>Edit Profile</button>
+          </form>
+        </div>
       </div>
+    </div>
   </div>
 </div>
-
   
   <div class="tab-pane fade" id="LupaPasswordContent">
     <div class="row">

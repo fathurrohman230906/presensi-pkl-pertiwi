@@ -16,9 +16,21 @@ class DashboardControllerMultiuser extends Controller
 {
     public function DashboardAdmin()
     {
-        return view('page.admin.dashboard', [
-            "titlePage" => "Dashboard"
-        ]);
+        $titlePage = "Dashboard";
+        // Check if 'adminID' is present in the session
+        $adminID = session('adminID');
+        if (!$adminID) {
+            return redirect()->back()->with('error', 'Wali Kelas ID not found in session.');
+        } 
+        // Get the number of students in the class (siswa count)
+        $PerusahaanCount = Perusahaan::count();
+        
+        // Get the number of accepted PengajuanPkl for the class's students
+        $perusahaanCount = PengajuanPkl::where('status_pengajuan', 'diterima')
+                                         ->count();
+    
+        // Return the view with the necessary data
+        return view('page.admin.dashboard', compact('titlePage', 'PerusahaanCount', 'perusahaanCount'));
     }
 
     public function DashboardSiswa()

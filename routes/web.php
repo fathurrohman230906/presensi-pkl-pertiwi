@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileUser\ProfileUserController;
 
 // controller admin
 use App\Http\Controllers\Admin\PerusahaanControllers;
+use App\Http\Controllers\Admin\KelolaSiswaAdminControllers;
 use App\Http\Controllers\Admin\PresensiControllerAdmin;
 // controller Pembimbing
 use App\Http\Controllers\Pembimbing\KelolaSiswaPembimbingControllers;
@@ -57,8 +58,16 @@ Route::middleware(['auth:admin,pembimbing,wali_kelas,siswa'])->group(function ()
 
 // Route untuk dashboard
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin-dashboard', [DashboardControllerMultiuser::class, 'DashboardAdmin'])->name('admin.perusahaan');
+    Route::get('/admin-dashboard', [DashboardControllerMultiuser::class, 'DashboardAdmin'])->name('admin.dashboard');
+
     Route::get('/data-perusahaan', [PerusahaanControllers::class, 'index'])->name('admin.perusahaan');
+    Route::get('/create-perusahaan', [PerusahaanControllers::class, 'create'])->name('create.perusahaan.admin');
+    Route::post('/add-perusahaan', [PerusahaanControllers::class, 'store'])->name('add.perusahaan.admin');
+    Route::post('/edit-perusahaan', [PerusahaanControllers::class, 'edit'])->name('edit.perusahaan.admin');
+    Route::post('/update-perusahaan/{perusahaanID}', [PerusahaanControllers::class, 'update'])->name('update.perusahaan.admin');
+    Route::delete('/delete-perusahaan', [PerusahaanControllers::class, 'destroy'])->name('delete.perusahaan.admin');
+
+    Route::get('/data-siswa', [KelolaSiswaAdminControllers::class, 'index'])->name('admin.siswa');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

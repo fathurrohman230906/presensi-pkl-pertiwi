@@ -5,7 +5,8 @@
 
   if($isAdmin) {
   $Dashboard = '/admin-dashboard';
-  $Anggota = $Dashboard . '/eskul-siswa';
+  $DataPerusahaan = '/data-perusahaan';
+  $KelolaSiswa = '/data-siswa';
 } elseif ($isPembimbing) {
   $Dashboard = '/pembimbing-dashboard';
   $Persetujuan = '/internship-persetujuan';

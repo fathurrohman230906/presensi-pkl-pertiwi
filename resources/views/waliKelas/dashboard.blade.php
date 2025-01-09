@@ -27,7 +27,7 @@
 <section class="container">
   <div class="row">
     <div class="col-12 col-md-12 col-lg-6">
-      <div class="card dashboard-card">
+      <div class="card dashboard-card mb-3">
         <div class="card-body">
           <div class="d-flex align-items-center">
             <i class="bi bi-people-fill fs-3 me-3"></i> <!-- Spacing for icon -->

@@ -74,7 +74,7 @@ class ProfileUserController extends Controller
                 "nm_lengkap" => "required|string",
                 "jk" => "required|string",
                 "agama" => "required|string",
-                "no_tlp" => "required|nullable|between:11,13|regex:/^\d{10,13}$/", // Validasi nomor telepon
+                "no_tlp" => "nullable|between:11,13|regex:/^\d{10,13}$/", // Validasi nomor telepon
                 "alamat" => "required|string", // Pastikan alamat merupakan string
                 "foto" => "nullable|image|mimes:jpeg,png,jpg,gif", // Foto bersifat opsional
             ]);
@@ -83,7 +83,56 @@ class ProfileUserController extends Controller
     
             if ($role === "admin") {
                 // Tambahkan logic untuk admin (jika diperlukan)
-                return redirect()->route('profile.user')->with('info', 'Fungsi admin belum tersedia.');
+                $adminID = session('adminID');
+            
+                if (!$adminID) {
+                    return redirect()->route('profile.user')->with('peringatan', 'ID Pembimbing tidak ditemukan dalam session.');
+                }
+    
+                // Cari data WaliKelas berdasarkan ID
+                $Admin = Admin::find($adminID);
+    
+                if (!$Admin) {
+                    // Jika WaliKelas tidak ditemukan
+                    return redirect()->route('profile.user')->with('peringatan', 'Data Admin tidak ditemukan.');
+                }
+    
+                // Update data pada model WaliKelas
+                $Admin->nm_lengkap = $DataUser['nm_lengkap'];
+                $Admin->jk = $DataUser['jk'];
+                $Admin->agama = $DataUser['agama'];
+                $Admin->alamat = $DataUser['alamat'];
+    
+                // Jika ada foto yang diupload, proses penyimpanan foto
+                if ($request->hasFile('foto')) {
+                    // Hapus foto lama jika ada
+                    if ($Admin->foto) {
+                        try {
+                            Storage::delete('public/FotoProfile/WaliKelas/' . $Admin->foto);
+                        } catch (\Exception $e) {
+                            return redirect()->route('profile.user')->with('peringatan', 'Gagal menghapus foto lama: ' . $e->getMessage());
+                        }
+                    }
+    
+                    // Simpan foto baru
+                    try {
+                        $filePath = $request->file('foto')->store('FotoProfile/Admin', 'public');
+                        $Admin->foto = basename($filePath);
+                    } catch (\Exception $e) {
+                        return redirect()->route('profile.user')->with('peringatan', 'Gagal menyimpan foto baru: ' . $e->getMessage());
+                    }
+                }
+    
+                // Simpan perubahan ke database
+                try {
+                    $Admin->save();
+                } catch (\Exception $e) {
+                    return redirect()->route('profile.user')->with('peringatan', 'Gagal menyimpan perubahan: ' . $e->getMessage());
+                }
+    
+                // Redirect dengan pesan sukses
+                return redirect()->route('profile.user')->with('success', 'Profile berhasil diubah.');
+                // return redirect()->route('profile.user')->with('info', 'Fungsi admin belum tersedia.');
             } elseif ($role === "pembimbing") {
                 // Tambahkan logic untuk pembimbing (jika diperlukan)
                 // Ambil ID wali kelas dari session

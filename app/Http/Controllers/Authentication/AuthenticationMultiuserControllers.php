@@ -45,6 +45,7 @@ class AuthenticationMultiuserControllers extends Controller
                     case 'admin':
                         $request->session()->put('adminID', $user->adminID);
                         $request->session()->put('nm_lengkap', $user->nm_lengkap);
+                        $request->session()->put('role', 'admin');
                         return redirect('/admin-dashboard')->with('success', 'Anda berhasil login');
     
                     case 'pembimbing':
@@ -57,11 +58,13 @@ class AuthenticationMultiuserControllers extends Controller
                         $request->session()->put('siswaID', $user->siswaID);
                         $request->session()->put('nm_lengkap', $user->nm_lengkap);
                         $request->session()->put('nis', $user->nis);
+                        $request->session()->put('role', 'siswa');
                         return redirect('/siswa-dashboard')->with('success', 'Anda berhasil login');
     
                     case 'wali_kelas':
                         $request->session()->put('wali_kelasID', $user->wali_kelasID);
                         $request->session()->put('nm_lengkap', $user->nm_lengkap);
+                        $request->session()->put('role', 'wali_kelas');
                         return redirect('/siswa-dashboard')->with('success', 'Anda berhasil login');
                 }
             }

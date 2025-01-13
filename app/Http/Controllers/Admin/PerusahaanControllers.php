@@ -11,7 +11,7 @@ class PerusahaanControllers extends Controller
 {
     public function index() {
       $titlePage = "Data Perusahaan";
-      $perusahaan = Perusahaan::get();
+      $perusahaan = Perusahaan::with('jurusan')->get();
       return view("page.admin.perusahaan.data-perusahaan", compact('titlePage', 'perusahaan'));
     }
 

@@ -10,7 +10,7 @@ class Siswa extends Authenticatable // Change this line
     use HasFactory;
 
     protected $fillable = [
-        "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "no_tlp", "foto", "alamat"
+          "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "no_tlp", "foto", "alamat"
         // "email", "password", "nm_lengkap", "jk", "agama", "kelasID", "perusahaanID", "no_tlp", "foto", "alamat"
     ];
     protected $table = 'siswa';

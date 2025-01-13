@@ -58,7 +58,7 @@
                             <td class="text-center align-middle">{{ $item->no_tlp }}</td>
                             <td class="text-center align-middle">{{ $item->deskripsi }}</td>
                             <td class="text-center align-middle">{{ $item->alamat }}</td>
-                            <td class="text-center align-middle">{{ $item->jurusanID }}</td>
+                            <td class="text-center align-middle">{{ $item->jurusan->nm_jurusan }}</td>
                             <td class="text-center align-middle">
                                 <!-- Edit Button -->
                                 <form action="{{ route('edit.perusahaan.admin') }}" method="POST" style="display:inline;">

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileUser\ProfileUserController;
 use App\Http\Controllers\Admin\PerusahaanControllers;
 use App\Http\Controllers\Admin\KelolaSiswaAdminControllers;
 use App\Http\Controllers\Admin\PresensiControllerAdmin;
+use App\Http\Controllers\Admin\SiswaImportController;
 // controller Pembimbing
 use App\Http\Controllers\Pembimbing\KelolaSiswaPembimbingControllers;
 use App\Http\Controllers\Pembimbing\PersetujuanPKLPembimbingControllers;
@@ -68,6 +69,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/delete-perusahaan', [PerusahaanControllers::class, 'destroy'])->name('delete.perusahaan.admin');
 
     Route::get('/data-siswa', [KelolaSiswaAdminControllers::class, 'index'])->name('admin.siswa');
+    Route::post('/edit-siswa', [KelolaSiswaAdminControllers::class, 'edit'])->name('edit.admin.siswa');
+    Route::post('import', [SiswaImportController::class, 'importDataSiswa'])->name('siswa.import');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

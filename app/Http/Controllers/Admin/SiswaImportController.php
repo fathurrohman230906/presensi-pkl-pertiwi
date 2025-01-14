@@ -17,6 +17,6 @@ class SiswaImportController extends Controller
         ]);
         
         Excel::import(new SiswaImport, $request->file('file'));
-        return redirect()->route('admin.siswa')->with('success', 'All good!');
+        return redirect()->route('admin.siswa')->with('success', 'Data berhasil di tambahkan!');
     }
 }

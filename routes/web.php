@@ -70,6 +70,8 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/data-siswa', [KelolaSiswaAdminControllers::class, 'index'])->name('admin.siswa');
     Route::post('/edit-siswa', [KelolaSiswaAdminControllers::class, 'edit'])->name('edit.admin.siswa');
+    Route::put('/update-siswa', [KelolaSiswaAdminControllers::class, 'update'])->name('update.admin.siswa');
+    Route::delete('/delete-siswa', [KelolaSiswaAdminControllers::class, 'destroy'])->name('delete.admin.siswa');
     Route::post('import', [SiswaImportController::class, 'importDataSiswa'])->name('siswa.import');
 });
 

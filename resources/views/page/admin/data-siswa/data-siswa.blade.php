@@ -1,11 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-<!-- Make sure jQuery is loaded before DataTables CSS and JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="/DataTables/datatables.css" /> <!-- Ensure correct path -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
-<!-- Optional: Additional Styling for Button Hover Effect -->
 <style>
     .btn-sm {
         margin-right: 5px;
@@ -32,7 +29,7 @@
 </a> -->
             <!-- Button trigger modal -->
           <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Export
+            Import
           </button>
         </div>
     </div>
@@ -69,36 +66,37 @@
                                 <form action="{{ route('edit.admin.siswa') }}" method="POST" style="display:inline;">
                                         @csrf
                                         <input type="hidden" name="pengajuanID" value="{{ $DataSiswa['pengajuanID'] }}">
-                                    <button type="submit" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <button type="submit" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </button>
                                     </form>
                 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('delete.perusahaan.admin') }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('delete.admin.siswa') }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="pengajuanID" value="{{ $DataSiswa['pengajuanID'] }}">
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">
-                                            <i class="fas fa-trash-alt"></i> Delete
+                                        <input type="hidden" name="nis" value="{{ $DataSiswa['nis'] }}">
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 @else
                                 <form action="{{ route('edit.admin.siswa') }}" method="POST" style="display:inline;">
                                         @csrf
                                         <input type="hidden" name="nis" value="{{ $DataSiswa['nis'] }}">
-                                    <button type="submit" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <button type="submit" class="btn btn-warning mb-2">
+                                        <i class="fas fa-edit"></i>
                                     </button>
                                     </form>
                 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('delete.perusahaan.admin') }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('delete.admin.siswa') }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="nis" value="{{ $DataSiswa['nis'] }}">
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">
-                                            <i class="fas fa-trash-alt"></i> Delete
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 @endif
@@ -111,31 +109,27 @@
     </div>
 </div>
 
-<!-- Modal Export siswa-->
+<!-- Modal Import siswa-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Export dan Import Data Siswa</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Import Data Siswa</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
         <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data">
+      <div class="modal-body">
           @csrf
           <div class="mb-3">
             <label for="fileExcel" class="form-label">Import File Excel</label>
             <input type="file" name="file" id="fileExcel" class="form-control" accept=".xlsx, .xls, .csv" required>
           </div>
-          <div class="text-end">
-            <button type="submit" class="btn btn-primary">Import</button>
-          </div>
-        </form>
       </div>
       <div class="modal-footer">
         <div class="container-fluid">
           <div class="row">
             <div class="col text-start">
-              <button type="button" class="btn btn-success">Export</button>
+              <button type="submit" class="btn btn-success">Import</button>
             </div>
             <div class="col text-end">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
@@ -143,44 +137,57 @@
           </div>
         </div>
       </div>
+              </form>
     </div>
   </div>
 </div>
-<!-- DataTables JS and Initialization -->
-<script src="/DataTables/datatables.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    @if (session('success'))
+        Swal.fire({
+            title: 'Sukses!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    @endif
+    @if (session('error'))
+        Swal.fire({
+            title: 'Peringatan!',
+            text: "{{ session('error') }}",
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
+    @endif
+});
     // Confirm before deleting
     function confirmDelete(button) {
-        Swal.fire({
-            title: 'Apakah ingin hapus data ini?',
-            text: 'jika ingin data ini akan terhapus permanen'
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Tidak',
-            confirmButtonText: 'Ya, Hapus',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                button.closest('form').submit();
-            }
-        });
-    }
+    Swal.fire({
+        title: 'Apakah ingin hapus data ini?',
+        text: 'Data ini akan terhapus permanen!',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Ya, Hapus',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            button.closest('form').submit();
+        }
+    });
+}
 
     // Initialize DataTable once the document is ready
     $(document).ready(function() {
         $('#myTable').DataTable(); // Initializes DataTable
-    });
-
-    // SweetAlert success notification
-    document.addEventListener('DOMContentLoaded', function () {
-        @if (session('success'))
-            Swal.fire({
-                title: 'Sukses!',
-                text: "{{ session('success') }}",
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        @endif
     });
 </script>
 

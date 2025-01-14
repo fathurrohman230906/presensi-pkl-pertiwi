@@ -23,5 +23,30 @@ class DatabaseSeeder extends Seeder
             'foto' => 'test@example.jpg',
             'alamat' => 'Testing Alamat',
         ]);
+        
+        //rpl
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Rekayasa Perangkat Lunak',
+        ]);
+        //lp
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Layanan Perbankan',
+        ]);
+        //tkj
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Teknik Jaringan dan Komputer',
+        ]);
+        //tkr
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Teknik Kendaraan Ringan',
+        ]);
+        //to
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Teknik Otomotif',
+        ]);
+        //tbsm
+        \App\Models\Jurusan::create([
+            'nm_jurusan' => 'Teknik Bisnis Sepeda Motor',
+        ]);
     }
 }

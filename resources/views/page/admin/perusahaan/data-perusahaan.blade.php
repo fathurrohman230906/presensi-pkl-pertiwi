@@ -1,11 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
-<!-- Pastikan jQuery sudah dimuat sebelum DataTables CSS dan JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jika belum ada -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 
-<link rel="stylesheet" href="/DataTables/datatables.css" /> <!-- Pastikan path ini benar -->
-<!-- Optional: Additional Styling for Button Hover Effect -->
+<link rel="stylesheet" href="/DataTables/datatables.css" /> 
 <style>
     .btn-sm {
         margin-right: 5px;
@@ -68,10 +66,6 @@
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
                                 </form>
-                                <!-- 
-                                    <a href="{{ route('edit.perusahaan.admin', ['perusahaanID' => $item->perusahaanID]) }}" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a> -->
                                     <!-- Delete Button -->
                                     <form action="{{ route('delete.perusahaan.admin') }}" method="POST" style="display:inline;">
                                         @csrf

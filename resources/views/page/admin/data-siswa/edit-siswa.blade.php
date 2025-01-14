@@ -9,7 +9,7 @@
     </ol>
 </nav>
 
-<div class="card">
+<div class="card mb-2">
     <div class="card-header">
         <!-- Page Title -->
         <div class="d-flex justify-content-between align-items-center">
@@ -19,75 +19,101 @@
     </div>
     <div class="card-body">
         <!-- Edit Siswa Form -->
-        <form action="" method="POST">
+        <form action="{{ route('update.admin.siswa') }}" method="POST">
             @csrf
             @method('PUT')
-            <!-- Row 1 -->
-            <div class="row">
-                <!-- Nama Siswa -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nm_lengkap">Nama Siswa</label>
-                        <input type="text" class="form-control @error('nm_lengkap') is-invalid @enderror" 
-                               id="nm_lengkap" name="nm_lengkap" 
-                               placeholder="Masukkan Nama Siswa" 
-                               value="{{ $dataSiswa->nm_lengkap }}">
-                        @error('nm_lengkap')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Jenis Kelamin -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="jk">Jenis Kelamin</label>
-                        <select class="form-select @error('jk') is-invalid @enderror" id="jk" name="jk">
-                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                            <option value="L" {{ $dataSiswa->jk == 'L' ? 'selected' : '' }}>Laki-Laki</option>
-                            <option value="P" {{ $dataSiswa->jk == 'P' ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                        @error('jk')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 2 -->
-            <div class="row">
-                <!-- Alamat -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <textarea class="form-control @error('alamat') is-invalid @enderror" 
-                                  id="alamat" name="alamat" 
-                                  placeholder="Masukkan Alamat">{{ $dataSiswa->alamat }}</textarea>
-                        @error('alamat')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Agama -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="agama">Agama</label>
-                        <input type="text" class="form-control @error('agama') is-invalid @enderror" 
-                               id="agama" name="agama" 
-                               placeholder="Masukkan Agama" 
-                               value="{{ $dataSiswa->agama }}">
-                        @error('agama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="form-group mt-3">
-                <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Update</button>
-            </div>
+            
+            @foreach($dataSiswa as $DataSiswa)
+            <input type="hidden" name="nis" value="{{ $DataSiswa->nis }}">
+              <!-- Row 1 -->
+              <div class="row">
+                  <!-- Nama Siswa -->
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="nm_lengkap">Nama Siswa</label>
+                          <input type="text" class="form-control @error('nm_lengkap') is-invalid @enderror" 
+                                 id="nm_lengkap" name="nm_lengkap" 
+                                 placeholder="Masukkan Nama Siswa" 
+                                 value="{{ old('nm_lengkap', $DataSiswa->nm_lengkap) }}">
+                          @error('nm_lengkap')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                      </div>
+                  </div>
+                  <!-- Kelas -->
+                  <div class="col-md-6">
+    <div class="form-group">
+        <label for="kelasID">Kelas</label>
+        <select class="form-select @error('kelasID') is-invalid @enderror" id="kelasID" name="kelasID">
+            <option value="" disabled {{ old('kelasID', $DataSiswa->kelasID) == '' ? 'selected' : '' }}>Pilih Kelas Siswa</option>
+            @foreach($DaftarKelas as $kelas)
+                <option value="{{ $kelas->kelasID }}" 
+                    {{ old('kelasID', $DataSiswa->kelasID) == $kelas->kelasID ? 'selected' : '' }}>
+                    {{ $kelas->nm_kelas }}
+                </option>
+            @endforeach
+        </select>
+        @error('kelasID')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+                  <!-- Jenis Kelamin -->
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="jk">Jenis Kelamin</label>
+                          <select class="form-select @error('jk') is-invalid @enderror" id="jk" name="jk">
+                              <option value="" disabled {{ old('jk', $DataSiswa->jk) == '' ? 'selected' : '' }}>Pilih Jenis Kelamin</option>
+                              <option value="L" {{ old('jk', $DataSiswa->jk) == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                              <option value="P" {{ old('jk', $DataSiswa->jk) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                          </select>
+                          @error('jk')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Row 2 -->
+              <div class="row">
+                  <!-- Alamat -->
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="alamat">Alamat</label>
+                          <textarea class="form-control @error('alamat') is-invalid @enderror" 
+                                    id="alamat" name="alamat" 
+                                    placeholder="Masukkan Alamat">{{ old('alamat', $DataSiswa->alamat) }}</textarea>
+                          @error('alamat')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                          @enderror
+                      </div>
+                  </div>
+  
+                  <!-- Agama -->
+                  <div class="col-md-6">
+    <div class="form-group">
+        <label for="agama">Agama</label>
+        <select class="form-select @error('agama') is-invalid @enderror" id="agama" name="agama">
+            <option value="" disabled {{ strtolower(old('agama', $DataSiswa->agama)) == '' ? 'selected' : '' }}>Pilih Agama</option>
+            <option value="Islam" {{ strtolower(old('agama', $DataSiswa->agama)) == 'islam' ? 'selected' : '' }}>Islam</option>
+            <option value="Kristen" {{ strtolower(old('agama', $DataSiswa->agama)) == 'kristen' ? 'selected' : '' }}>Kristen</option>
+            <option value="Katolik" {{ strtolower(old('agama', $DataSiswa->agama)) == 'katolik' ? 'selected' : '' }}>Katolik</option>
+            <option value="Hindu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'hindu' ? 'selected' : '' }}>Hindu</option>
+            <option value="Buddha" {{ strtolower(old('agama', $DataSiswa->agama)) == 'buddha' ? 'selected' : '' }}>Buddha</option>
+            <option value="Konghucu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
+        </select>
+        @error('agama')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+              </div>
+  
+              <!-- Submit Button -->
+              <div class="form-group mt-3">
+                  <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Update</button>
+              </div>
+            @endforeach
         </form>
     </div>
 </div>

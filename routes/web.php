@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\PerusahaanControllers;
 use App\Http\Controllers\Admin\KelolaSiswaAdminControllers;
 use App\Http\Controllers\Admin\PresensiControllerAdmin;
 use App\Http\Controllers\Admin\SiswaImportController;
+use App\Http\Controllers\Admin\KelasSiswaAdminControllers;
+use App\Http\Controllers\Admin\WaliKelasSiswaAdminControllers;
 // controller Pembimbing
 use App\Http\Controllers\Pembimbing\KelolaSiswaPembimbingControllers;
 use App\Http\Controllers\Pembimbing\PersetujuanPKLPembimbingControllers;
@@ -67,12 +69,21 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/edit-perusahaan', [PerusahaanControllers::class, 'edit'])->name('edit.perusahaan.admin');
     Route::post('/update-perusahaan/{perusahaanID}', [PerusahaanControllers::class, 'update'])->name('update.perusahaan.admin');
     Route::delete('/delete-perusahaan', [PerusahaanControllers::class, 'destroy'])->name('delete.perusahaan.admin');
-
+    
     Route::get('/data-siswa', [KelolaSiswaAdminControllers::class, 'index'])->name('admin.siswa');
     Route::post('/edit-siswa', [KelolaSiswaAdminControllers::class, 'edit'])->name('edit.admin.siswa');
     Route::put('/update-siswa', [KelolaSiswaAdminControllers::class, 'update'])->name('update.admin.siswa');
     Route::delete('/delete-siswa', [KelolaSiswaAdminControllers::class, 'destroy'])->name('delete.admin.siswa');
     Route::post('import', [SiswaImportController::class, 'importDataSiswa'])->name('siswa.import');
+    
+    Route::get('/data-kelas', [KelasSiswaAdminControllers::class, 'index'])->name('admin.kelas');
+    Route::get('/create-kelas', [KelasSiswaAdminControllers::class, 'create'])->name('create.kelas.admin');
+    Route::post('/add-kelas', [KelasSiswaAdminControllers::class, 'store'])->name('add.kelas.admin');
+    Route::post('/edit-kelas', [KelasSiswaAdminControllers::class, 'edit'])->name('edit.kelas.admin');
+    Route::post('/update-kelas', [KelasSiswaAdminControllers::class, 'update'])->name('update.kelas.admin');
+    Route::delete('/delete-kelas', [KelasSiswaAdminControllers::class, 'destroy'])->name('delete.kelas.admin');
+
+    Route::get('/data-wali-kelas', [WaliKelasSiswaAdminControllers::class, 'index'])->name('admin.kelas');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

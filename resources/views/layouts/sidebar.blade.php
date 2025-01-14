@@ -3,10 +3,13 @@
   $isPembimbing = Auth::guard('pembimbing')->check();
   $isWali_Kelas = Auth::guard('wali_kelas')->check();
 
+  $WaliKelas_Admin = $isAdmin || $isWali_Kelas;
   if($isAdmin) {
   $Dashboard = '/admin-dashboard';
   $DataPerusahaan = '/data-perusahaan';
   $KelolaSiswa = '/data-siswa';
+  $KelolaKelas = '/data-kelas';
+  $waliKelas = '/data-wali-kelas';
 } elseif ($isPembimbing) {
   $Dashboard = '/pembimbing-dashboard';
   $Persetujuan = '/internship-persetujuan';
@@ -71,10 +74,17 @@ $PageKelolaKelas = ($titlePage === "Kelola Kelas");
           </a>
         </li>
 
-        <li class="{{ $isWali_Kelas ? 'd-none' : 'd-block' }} {{ $PagePersetujuanPKL ? 'active' : '' }}">
+        <li class="{{ $WaliKelas_Admin ? 'd-none' : 'd-block' }} {{ $PagePersetujuanPKL ? 'active' : '' }}">
           <a class="sidenav-item-link" href="{{ $Persetujuan ?? '' }}">
             <i class="bi bi-journal-check"></i> <!-- Icon for student data -->
             <span class="nav-text">Persetujuan PKL</span>
+          </a>
+        </li>
+
+        <li class="{{ $isWali_Kelas ? 'd-none' : 'd-block' }} {{ $PageKelolaKelas ? 'active' : '' }}">
+          <a class="sidenav-item-link" href="{{ $KelolaKelas ?? '' }}">
+            <i class="mdi mdi-domain"></i> <!-- Icon for class data -->
+            <span class="nav-text">Data Kelas</span>
           </a>
         </li>
 
@@ -91,13 +101,6 @@ $PageKelolaKelas = ($titlePage === "Kelola Kelas");
             <span class="nav-text">Data Pembimbing</span>
           </a>
         </li>        
-
-        <li class="{{ $isWali_Kelas ? 'd-none' : 'd-block' }} {{ $PageKelolaKelas ? 'active' : '' }}">
-          <a class="sidenav-item-link" href="{{ $KelolaKelas ?? '' }}">
-            <i class="mdi mdi-domain"></i> <!-- Icon for class data -->
-            <span class="nav-text">Data Kelas</span>
-          </a>
-        </li>
 
         <li class="{{ $PageKelolaPresensi ? 'active' : '' }}">
           <a class="sidenav-item-link" href="{{ $KelolaPresensi ?? '' }}">

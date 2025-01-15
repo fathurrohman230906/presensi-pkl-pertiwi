@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\PresensiControllerAdmin;
 use App\Http\Controllers\Admin\SiswaImportController;
 use App\Http\Controllers\Admin\KelasSiswaAdminControllers;
 use App\Http\Controllers\Admin\WaliKelasSiswaAdminControllers;
+use App\Http\Controllers\Admin\WaliKelasImportControllers;
+use App\Http\Controllers\Admin\PresensiPKLAdminControllers;
 // controller Pembimbing
 use App\Http\Controllers\Pembimbing\KelolaSiswaPembimbingControllers;
 use App\Http\Controllers\Pembimbing\PersetujuanPKLPembimbingControllers;
@@ -83,7 +85,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/update-kelas', [KelasSiswaAdminControllers::class, 'update'])->name('update.kelas.admin');
     Route::delete('/delete-kelas', [KelasSiswaAdminControllers::class, 'destroy'])->name('delete.kelas.admin');
 
-    Route::get('/data-wali-kelas', [WaliKelasSiswaAdminControllers::class, 'index'])->name('admin.kelas');
+    Route::get('/data-wali-kelas', [WaliKelasSiswaAdminControllers::class, 'index'])->name('admin.wali.kelas');
+    Route::post('/edit-waliKelas', [WaliKelasSiswaAdminControllers::class, 'edit'])->name('edit.admin.waliKelas');
+    Route::put('/update-waliKelas', [WaliKelasSiswaAdminControllers::class, 'update'])->name('update.admin.waliKelas');
+    Route::delete('/delete-waliKelas', [WaliKelasSiswaAdminControllers::class, 'destroy'])->name('delete.admin.waliKelas');
+    Route::post('import-wali-kelas', [WaliKelasImportControllers::class, 'importDataWaliKelas'])->name('wali.kelas.import');
+    
+    Route::get('/data-presensi', [PresensiPKLAdminControllers::class, 'index'])->name('admin.presensi');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

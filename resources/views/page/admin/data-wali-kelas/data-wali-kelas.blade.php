@@ -20,7 +20,7 @@
 <!-- Page Title -->
 <h3 class="fw-bold mb-4">{{ $titlePage }}</h3>
 
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         <!-- Add Button -->
         <div class="my-2">
@@ -54,12 +54,14 @@
                         <tr>
                             <td class="text-center align-middle">{{ $key + 1 }}</td>
                             <td class="text-center align-middle">{{ $DataWaliKelas['nm_lengkap'] }}</td>
-                            <td class="text-center align-middle">{{ $DataWaliKelas['jk'] }}</td>
-                            <td class="text-center align-middle">{{ $DataWaliKelas['kelas'] }}</td>
+                            <td class="text-center align-middle">
+                                {{ $DataWaliKelas['jk'] == 'L' ? 'Laki-Laki' : ($DataWaliKelas['jk'] == 'P' ? 'Perempuan' : '-') }}
+                            </td>
+                            <td class="text-center align-middle">{{ $DataWaliKelas->kelas->nm_kelas }}</td>
                             <td class="text-center align-middle">{{ $DataWaliKelas['agama'] }}</td>
                             <td class="text-center align-middle">{{ $DataWaliKelas['alamat'] }}</td>
                             <td class="text-center align-middle">
-                                <form action="{{ route('edit.admin.siswa') }}" method="POST" style="display:inline;">
+                                <form action="{{ route('edit.admin.waliKelas') }}" method="POST" style="display:inline;">
                                         @csrf
                                         <input type="hidden" name="wali_kelasID" value="{{ $DataWaliKelas['wali_kelasID'] }}">
                                     <button type="submit" class="btn btn-warning mb-2">
@@ -68,7 +70,7 @@
                                     </form>
                 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('delete.admin.siswa') }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('delete.admin.waliKelas') }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="wali_kelasID" value="{{ $DataWaliKelas['wali_kelasID'] }}">
@@ -93,7 +95,7 @@
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Import Data Wali Kelas</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('wali.kelas.import') }}" method="POST" enctype="multipart/form-data">
       <div class="modal-body">
           @csrf
           <div class="mb-3">

@@ -10,6 +10,7 @@
   $KelolaSiswa = '/data-siswa';
   $KelolaKelas = '/data-kelas';
   $waliKelas = '/data-wali-kelas';
+  $KelolaPresensi = '/data-presensi';
 } elseif ($isPembimbing) {
   $Dashboard = '/pembimbing-dashboard';
   $Persetujuan = '/internship-persetujuan';

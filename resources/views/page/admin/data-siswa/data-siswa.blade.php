@@ -55,7 +55,9 @@
                         <tr>
                             <td class="text-center align-middle">{{ $key + 1 }}</td>
                             <td class="text-center align-middle">{{ $DataSiswa['nm_lengkap'] }}</td>
-                            <td class="text-center align-middle">{{ $DataSiswa['jk'] }}</td>
+                            <td class="text-center align-middle">
+                                {{ $DataSiswa['jk'] == 'L' ? 'Laki-Laki' : ($DataSiswa['jk'] == 'P' ? 'Perempuan' : '-') }}
+                            </td>
                             <td class="text-center align-middle">{{ $DataSiswa['kelas'] }}</td>
                             <td class="text-center align-middle">{{ $DataSiswa['tempat_pkl'] }}</td>
                             <td class="text-center align-middle">{{ $DataSiswa['agama'] }}</td>

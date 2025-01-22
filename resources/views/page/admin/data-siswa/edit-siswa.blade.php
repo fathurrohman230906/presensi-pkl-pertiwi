@@ -72,6 +72,25 @@
                           @enderror
                       </div>
                   </div>
+
+                                    <!-- Agama -->
+                                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="agama">Agama</label>
+                        <select class="form-select @error('agama') is-invalid @enderror" id="agama" name="agama">
+                            <option value="" disabled {{ strtolower(old('agama', $DataSiswa->agama)) == '' ? 'selected' : '' }}>Pilih Agama</option>
+                            <option value="Islam" {{ strtolower(old('agama', $DataSiswa->agama)) == 'islam' ? 'selected' : '' }}>Islam</option>
+                            <option value="Kristen" {{ strtolower(old('agama', $DataSiswa->agama)) == 'kristen' ? 'selected' : '' }}>Kristen</option>
+                            <option value="Katolik" {{ strtolower(old('agama', $DataSiswa->agama)) == 'katolik' ? 'selected' : '' }}>Katolik</option>
+                            <option value="Hindu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'hindu' ? 'selected' : '' }}>Hindu</option>
+                            <option value="Buddha" {{ strtolower(old('agama', $DataSiswa->agama)) == 'buddha' ? 'selected' : '' }}>Buddha</option>
+                            <option value="Konghucu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
+                        </select>
+                        @error('agama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
               </div>
   
               <!-- Row 2 -->
@@ -88,25 +107,6 @@
                           @enderror
                       </div>
                   </div>
-  
-                  <!-- Agama -->
-                  <div class="col-md-6">
-    <div class="form-group">
-        <label for="agama">Agama</label>
-        <select class="form-select @error('agama') is-invalid @enderror" id="agama" name="agama">
-            <option value="" disabled {{ strtolower(old('agama', $DataSiswa->agama)) == '' ? 'selected' : '' }}>Pilih Agama</option>
-            <option value="Islam" {{ strtolower(old('agama', $DataSiswa->agama)) == 'islam' ? 'selected' : '' }}>Islam</option>
-            <option value="Kristen" {{ strtolower(old('agama', $DataSiswa->agama)) == 'kristen' ? 'selected' : '' }}>Kristen</option>
-            <option value="Katolik" {{ strtolower(old('agama', $DataSiswa->agama)) == 'katolik' ? 'selected' : '' }}>Katolik</option>
-            <option value="Hindu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'hindu' ? 'selected' : '' }}>Hindu</option>
-            <option value="Buddha" {{ strtolower(old('agama', $DataSiswa->agama)) == 'buddha' ? 'selected' : '' }}>Buddha</option>
-            <option value="Konghucu" {{ strtolower(old('agama', $DataSiswa->agama)) == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
-        </select>
-        @error('agama')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
               </div>
   
               <!-- Submit Button -->

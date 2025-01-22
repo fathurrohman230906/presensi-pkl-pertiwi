@@ -32,45 +32,45 @@ class WaliKelasSiswaAdminControllers extends Controller
     }
     
     public function update(Request $request)
-{
-    // Validasi input
-    $validatedData = $request->validate([
-        'wali_kelasID' => 'required|string|max:12',
-        'nm_lengkap' => 'required|string|max:255',
-        'kelasID' => 'required|integer',
-        'jk' => 'required|in:L,P',
-        'alamat' => 'nullable|string|max:500',
-        'agama' => 'nullable|string|max:100',
-    ]);
+    {
+        // Validasi input
+        $validatedData = $request->validate([
+            'wali_kelasID' => 'required|string|max:12',
+            'nm_lengkap' => 'required|string|max:255',
+            'kelasID' => 'required|integer',
+            'jk' => 'required|in:L,P',
+            'alamat' => 'nullable|string|max:500',
+            'agama' => 'nullable|string|max:100',
+        ]);
 
-    // Ambil data WaliKelas berdasarkan wali_kelasID
-    $WaliKelas = WaliKelas::with('kelas')->where('wali_kelasID', $request->wali_kelasID)->firstOrFail();
+        // Ambil data WaliKelas berdasarkan wali_kelasID
+        $WaliKelas = WaliKelas::with('kelas')->where('wali_kelasID', $request->wali_kelasID)->firstOrFail();
 
-        // Update data siswa tanpa perusahaanID
-        $WaliKelas->update($validatedData);
-  
+            // Update data siswa tanpa perusahaanID
+            $WaliKelas->update($validatedData);
+    
 
-    return redirect()->route('admin.wali.kelas')->with('success', 'Data berhasil diperbarui!');
-}
-
-public function destroy(Request $request)
-{
-    try {
-        // Cari data siswa berdasarkan NIS
-        $WaliKelas = WaliKelas::with('kelas')->where('wali_kelasID', $request->wali_kelasID)->first();
-
-        if (!$WaliKelas) {
-           return redirect()->route('admin.wali.kelas')->with('error', 'Data Wali Kelas tidak ditemukan!');
-        }
-
-        // Hapus data siswa
-        $WaliKelas->delete();
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('admin.wali.kelas')->with('success', 'Data berhasil dihapus!');
-    } catch (\Exception $e) {
-        // Tangani error dan tampilkan pesan
-        return redirect()->route('admin.siswa')->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+        return redirect()->route('admin.wali.kelas')->with('success', 'Data berhasil diperbarui!');
     }
-}
+
+    public function destroy(Request $request)
+    {
+        try {
+            // Cari data siswa berdasarkan NIS
+            $WaliKelas = WaliKelas::with('kelas')->where('wali_kelasID', $request->wali_kelasID)->first();
+
+            if (!$WaliKelas) {
+            return redirect()->route('admin.wali.kelas')->with('error', 'Data Wali Kelas tidak ditemukan!');
+            }
+
+            // Hapus data siswa
+            $WaliKelas->delete();
+
+            // Redirect dengan pesan sukses
+            return redirect()->route('admin.wali.kelas')->with('success', 'Data berhasil dihapus!');
+        } catch (\Exception $e) {
+            // Tangani error dan tampilkan pesan
+            return redirect()->route('admin.wali.kelas')->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+        }
+    }
 }

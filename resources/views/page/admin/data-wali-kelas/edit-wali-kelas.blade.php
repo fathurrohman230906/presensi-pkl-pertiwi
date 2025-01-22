@@ -40,23 +40,23 @@
                       </div>
                   </div>
                   <!-- Kelas -->
-                  <div class="col-md-6">
-    <div class="form-group">
-        <label for="kelasID">Kelas</label>
-        <select class="form-select @error('kelasID') is-invalid @enderror" id="kelasID" name="kelasID">
-            <option value="" disabled {{ old('kelasID', $WaliKelas->kelasID) == '' ? 'selected' : '' }}>Pilih Kelas Siswa</option>
-            @foreach($DaftarKelas as $kelas)
-                <option value="{{ $kelas->kelasID }}" 
-                    {{ old('kelasID', $WaliKelas->kelasID) == $kelas->kelasID ? 'selected' : '' }}>
-                    {{ $kelas->nm_kelas }}
-                </option>
-            @endforeach
-        </select>
-        @error('kelasID')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="kelasID">Kelas</label>
+                            <select class="form-select @error('kelasID') is-invalid @enderror" id="kelasID" name="kelasID">
+                                <option value="" disabled {{ old('kelasID', $WaliKelas->kelasID) == '' ? 'selected' : '' }}>Pilih Kelas Siswa</option>
+                                @foreach($DaftarKelas as $kelas)
+                                    <option value="{{ $kelas->kelasID }}" 
+                                        {{ old('kelasID', $WaliKelas->kelasID) == $kelas->kelasID ? 'selected' : '' }}>
+                                        {{ $kelas->nm_kelas }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('kelasID')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                   <!-- Jenis Kelamin -->
                   <div class="col-md-6">
                       <div class="form-group">
@@ -71,6 +71,25 @@
                           @enderror
                       </div>
                   </div>
+
+                                    <!-- Agama -->
+                                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="agama">Agama</label>
+                        <select class="form-select @error('agama') is-invalid @enderror" id="agama" name="agama">
+                            <option value="" disabled {{ strtolower(old('agama', $WaliKelas->agama)) == '' ? 'selected' : '' }}>Pilih Agama</option>
+                            <option value="Islam" {{ strtolower(old('agama', $WaliKelas->agama)) == 'islam' ? 'selected' : '' }}>Islam</option>
+                            <option value="Kristen" {{ strtolower(old('agama', $WaliKelas->agama)) == 'kristen' ? 'selected' : '' }}>Kristen</option>
+                            <option value="Katolik" {{ strtolower(old('agama', $WaliKelas->agama)) == 'katolik' ? 'selected' : '' }}>Katolik</option>
+                            <option value="Hindu" {{ strtolower(old('agama', $WaliKelas->agama)) == 'hindu' ? 'selected' : '' }}>Hindu</option>
+                            <option value="Buddha" {{ strtolower(old('agama', $WaliKelas->agama)) == 'buddha' ? 'selected' : '' }}>Buddha</option>
+                            <option value="Konghucu" {{ strtolower(old('agama', $WaliKelas->agama)) == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
+                        </select>
+                        @error('agama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
               </div>
   
               <!-- Row 2 -->
@@ -87,25 +106,6 @@
                           @enderror
                       </div>
                   </div>
-  
-                  <!-- Agama -->
-                  <div class="col-md-6">
-    <div class="form-group">
-        <label for="agama">Agama</label>
-        <select class="form-select @error('agama') is-invalid @enderror" id="agama" name="agama">
-            <option value="" disabled {{ strtolower(old('agama', $WaliKelas->agama)) == '' ? 'selected' : '' }}>Pilih Agama</option>
-            <option value="Islam" {{ strtolower(old('agama', $WaliKelas->agama)) == 'islam' ? 'selected' : '' }}>Islam</option>
-            <option value="Kristen" {{ strtolower(old('agama', $WaliKelas->agama)) == 'kristen' ? 'selected' : '' }}>Kristen</option>
-            <option value="Katolik" {{ strtolower(old('agama', $WaliKelas->agama)) == 'katolik' ? 'selected' : '' }}>Katolik</option>
-            <option value="Hindu" {{ strtolower(old('agama', $WaliKelas->agama)) == 'hindu' ? 'selected' : '' }}>Hindu</option>
-            <option value="Buddha" {{ strtolower(old('agama', $WaliKelas->agama)) == 'buddha' ? 'selected' : '' }}>Buddha</option>
-            <option value="Konghucu" {{ strtolower(old('agama', $WaliKelas->agama)) == 'konghucu' ? 'selected' : '' }}>Konghucu</option>
-        </select>
-        @error('agama')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
               </div>
   
               <!-- Submit Button -->

@@ -5,29 +5,29 @@
 
   $WaliKelas_Admin = $isAdmin || $isWali_Kelas;
   if($isAdmin) {
-  $Dashboard = '/admin-dashboard';
-  $DataPerusahaan = '/data-perusahaan';
-  $KelolaSiswa = '/data-siswa';
-  $KelolaKelas = '/data-kelas';
-  $waliKelas = '/data-wali-kelas';
-  $pembimbingLink = '/data-pembimbing';
-  $KelolaPresensi = '/data-presensi';
-} elseif ($isPembimbing) {
-  $Dashboard = '/pembimbing-dashboard';
-  $Persetujuan = '/internship-persetujuan';
-  $DataPerusahaan = '/kelola-perusahaan';
-  $LaporanKegiatan = '/laporan';
-  $KelolaSiswa = '/kelola-siswa';
-  $KelolaKelas = '/kelola-kelas';
-  $KelolaPresensi = '/presensi-internship';
-  $waliKelas = '/wali-kelas';
-} elseif ($isWali_Kelas) {
-  $nis = session('nis');
-  $Dashboard = '/wali-kelas-dashboard';
-  $DataPerusahaan = '/perusahaan';
-  $KelolaPresensi = '/kelola-presensi';
-  $LaporanKegiatan = '/laporan';
-}
+    $Dashboard = '/admin-dashboard';
+    $DataPerusahaan = '/data-perusahaan';
+    $KelolaSiswa = '/data-siswa';
+    $KelolaKelas = '/data-kelas';
+    $waliKelas = '/data-wali-kelas';
+    $pembimbingLink = '/data-pembimbing';
+    $KelolaPresensi = '/presensi';
+  } elseif ($isPembimbing) {
+    $Dashboard = '/pembimbing-dashboard';
+    $Persetujuan = '/internship-persetujuan';
+    $DataPerusahaan = '/kelola-perusahaan';
+    $LaporanKegiatan = '/laporan';
+    $KelolaSiswa = '/kelola-siswa';
+    $KelolaKelas = '/kelola-kelas';
+    $KelolaPresensi = '/presensi-internship';
+    $waliKelas = '/wali-kelas';
+  } elseif ($isWali_Kelas) {
+    $nis = session('nis');
+    $Dashboard = '/wali-kelas-dashboard';
+    $DataPerusahaan = '/perusahaan';
+    $KelolaPresensi = '/kelola-presensi';
+    $LaporanKegiatan = '/laporan';
+  }
 
 $PageDashboard = ($titlePage === "Dashboard");
 $PagePerusahaan = ($titlePage === "Data Perusahaan");

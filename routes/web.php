@@ -99,7 +99,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/delete-pembimbing', [KelolaPembimbingAdminControllers::class, 'destroy'])->name('delete.admin.pembimbing');
     Route::post('import-pembimbing', [ImportPembimbingControllers::class, 'importDataPembimbing'])->name('pembimbing.import');
     
-    Route::get('/data-presensi', [PresensiPKLAdminControllers::class, 'index'])->name('admin.presensi');
+    Route::get('/presensi', [PresensiPKLAdminControllers::class, 'index'])->name('admin.presensi');
+    Route::post('/cari', [PresensiPKLAdminControllers::class, 'cari'])->name('cari.siswa.presensi.admin');
 });
 
 Route::middleware('auth:pembimbing')->group(function () {

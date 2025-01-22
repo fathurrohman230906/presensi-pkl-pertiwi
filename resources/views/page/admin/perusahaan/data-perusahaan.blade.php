@@ -62,8 +62,8 @@
                                 <form action="{{ route('edit.perusahaan.admin') }}" method="POST" style="display:inline;">
                                     @csrf
                                     <input type="hidden" name="perusahaanID" value="{{ $item->perusahaanID }}">
-                                    <button type="submit" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <button type="submit" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> 
                                     </button>
                                 </form>
                                     <!-- Delete Button -->
@@ -71,8 +71,8 @@
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="perusahaanID" value="{{ $item->perusahaanID }}">
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">
-                                            <i class="fas fa-trash-alt"></i> Delete
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">
+                                            <i class="fas fa-trash-alt"></i> 
                                         </button>
                                     </form>
 

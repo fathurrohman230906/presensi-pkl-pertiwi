@@ -98,13 +98,14 @@ class PresensiController extends Controller
     // }
     public function ProsesPresensi(Request $request)
     {
+      dd($request->all());
         try {
             // Validate the incoming request
             $request->validate([
                 'lokasi' => 'required|json',
                 'nis' => 'required|string',
                 'perusahaanID' => 'required|integer',
-                'foto' => 'nullable|string', // Assuming base64 encoded image
+                'foto' => 'nullable|string',
             ]);
     
             // Decode the JSON location data

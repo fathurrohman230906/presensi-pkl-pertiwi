@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\KelasSiswaAdminControllers;
 use App\Http\Controllers\Admin\WaliKelasSiswaAdminControllers;
 use App\Http\Controllers\Admin\WaliKelasImportControllers;
 use App\Http\Controllers\Admin\PresensiPKLAdminControllers;
+use App\Http\Controllers\Admin\KelolaPembimbingAdminControllers;
+use App\Http\Controllers\Admin\ImportPembimbingControllers;
 // controller Pembimbing
 use App\Http\Controllers\Pembimbing\KelolaSiswaPembimbingControllers;
 use App\Http\Controllers\Pembimbing\PersetujuanPKLPembimbingControllers;
@@ -90,6 +92,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::put('/update-waliKelas', [WaliKelasSiswaAdminControllers::class, 'update'])->name('update.admin.waliKelas');
     Route::delete('/delete-waliKelas', [WaliKelasSiswaAdminControllers::class, 'destroy'])->name('delete.admin.waliKelas');
     Route::post('import-wali-kelas', [WaliKelasImportControllers::class, 'importDataWaliKelas'])->name('wali.kelas.import');
+    
+    Route::get('/data-pembimbing', [KelolaPembimbingAdminControllers::class, 'index'])->name('admin.pembimbing');
+    Route::post('/edit-pembimbing', [KelolaPembimbingAdminControllers::class, 'edit'])->name('edit.admin.pembimbing');
+    Route::put('/update-pembimbing', [KelolaPembimbingAdminControllers::class, 'update'])->name('update.admin.pembimbing');
+    Route::delete('/delete-pembimbing', [KelolaPembimbingAdminControllers::class, 'destroy'])->name('delete.admin.pembimbing');
+    Route::post('import-pembimbing', [ImportPembimbingControllers::class, 'importDataPembimbing'])->name('pembimbing.import');
     
     Route::get('/data-presensi', [PresensiPKLAdminControllers::class, 'index'])->name('admin.presensi');
 });

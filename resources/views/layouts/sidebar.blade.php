@@ -10,6 +10,7 @@
   $KelolaSiswa = '/data-siswa';
   $KelolaKelas = '/data-kelas';
   $waliKelas = '/data-wali-kelas';
+  $pembimbingLink = '/data-pembimbing';
   $KelolaPresensi = '/data-presensi';
 } elseif ($isPembimbing) {
   $Dashboard = '/pembimbing-dashboard';
@@ -36,6 +37,7 @@ $PageKelolaSiswa = ($titlePage === "Kelola Siswa");
 $PagePersetujuanPKL = ($titlePage === "Persetujuan PKL");
 $PageKelolaWaliKelas = ($titlePage === "Kelola Wali Kelas");
 $PageKelolaKelas = ($titlePage === "Kelola Kelas");
+$PagePembimbing = ($titlePage === "Kelola Pembimbing");
 @endphp
 <aside class="left-sidebar sidebar-dark" id="left-sidebar">
   <div id="sidebar" class="sidebar sidebar-with-footer">
@@ -96,8 +98,8 @@ $PageKelolaKelas = ($titlePage === "Kelola Kelas");
           </a>
         </li>
 
-        <li class="{{ $isWali_Kelas ? 'd-none' : 'd-block' }} {{ session('level') === 'pembimbing' ? 'd-none' : 'd-block' }}">
-          <a class="sidenav-item-link" href="data-wali-kelas.html">
+        <li class="{{ $isWali_Kelas ? 'd-none' : 'd-block' }} {{ session('level') === 'pembimbing' ? 'd-none' : 'd-block' }} {{ $PagePembimbing ? 'active' : '' }}">
+          <a class="sidenav-item-link" href="{{ $pembimbingLink }}">
             <i class="mdi mdi-account-group"></i> <!-- Icon for class supervisor -->
             <span class="nav-text">Data Pembimbing</span>
           </a>
